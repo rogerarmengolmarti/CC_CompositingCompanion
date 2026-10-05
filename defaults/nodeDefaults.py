@@ -26,3 +26,6 @@ nuke.knobDefault("Inpaint2.fillRegion", "Matte Alpha")
 
 
 
+
+# Shuffle
+nuke.knobDefault("Shuffle.label", "[value in]")

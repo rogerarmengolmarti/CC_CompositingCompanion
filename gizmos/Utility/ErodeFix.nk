@@ -1,15 +1,17 @@
 set cut_paste_input [stack 0]
 version 15.2 v6
 push $cut_paste_input
+add_layer {BrshDistribution BrshDistribution.red BrshDistribution.green BrshDistribution.blue BrshDistribution.alpha}
 Group {
  name ErodeFix1
  tile_color 0x248c4dff
  selected true
- xpos -854
- ypos 7582
+ xpos -707
+ ypos 7714
  disable_group_view true
  addUserKnob {20 Settings}
  addUserKnob {26 flow_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nErodeFix"}
+ addUserKnob {41 channels T Dilate2.channels}
  addUserKnob {41 size T Dilate2.size}
  addUserKnob {26 ""}
  addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">ErodeFix</font><font size=\"3\"> v1.0.0 - by Roger Armengol Martí</font>"}
@@ -18,15 +20,17 @@ Group {
   inputs 0
   name Input1
   xpos -588
-  ypos 404
+  ypos 210
  }
  Dilate {
+  channels {{{Dilate2.channels}}}
   size {{-parent.Dilate2.size}}
   name Dilate1
   xpos -588
-  ypos 444
+  ypos 443
  }
  Dilate {
+  channels BrshDistribution
   size 1
   name Dilate2
   xpos -588
