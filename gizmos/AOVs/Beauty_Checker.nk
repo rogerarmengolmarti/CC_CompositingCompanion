@@ -3,7 +3,7 @@ version 15.1 v2
 push $cut_paste_input
 Group {
  name Beauty_Checker2
- tile_color 0x83be9cff
+ tile_color 0x238c66ff
  selected true
  xpos -15040
  ypos -1999

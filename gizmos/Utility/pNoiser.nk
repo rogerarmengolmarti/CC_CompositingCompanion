@@ -1,7 +1,7 @@
 #! E:/Programs/Foundry/Nuke/Nuke_v15_2/nuke-15.2.9.dll -nx
 version 15.2 v9
 Group {
- tile_color 0x35b267ff
+ tile_color 0x238c66ff
  disable_group_view true
  addUserKnob {20 general_TAB l General}
  addUserKnob {26 Strength_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nStrength"}

@@ -3,7 +3,7 @@ version 15.1 v5
 push $cut_paste_input
 Group {
  name Texture_Packer1
- tile_color 0x85bf9cff
+ tile_color 0x238c66ff
  selected true
  xpos 3824
  ypos -7540
