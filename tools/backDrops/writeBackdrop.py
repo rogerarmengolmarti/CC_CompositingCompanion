@@ -14,9 +14,9 @@ ccVars = CCVariables()
 
 # ----- Directory paths -----
 ICONS_DIR  = ccVars.ICONS_DIR
-SCRIPTS_DIR = ccVars.SCRIPTS_DIR
+TOOLS_DIR = ccVars.TOOLS_DIR
 
-PRESETS_PATH = os.path.join(SCRIPTS_DIR, 'backDrops', 'utils_bkdrp', 'backdrop_presets.json')
+PRESETS_PATH = os.path.join(TOOLS_DIR, 'backDrops', 'utils_bkdrp', 'backdrop_presets.json')
 
 
 def _load() -> dict:
