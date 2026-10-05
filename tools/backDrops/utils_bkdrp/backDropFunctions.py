@@ -114,6 +114,6 @@ def createBackDrop(data):
 
     bd.knob('tile_color').setValue(backDrop_color)
 
-    bd.knob('appearance').setValue('Fill')
+    bd.knob('appearance').setValue('Fill' if data.get('filled', True) else 'Border')
     bd.knob('bookmark').setValue(data.get('bookmark', False))
     

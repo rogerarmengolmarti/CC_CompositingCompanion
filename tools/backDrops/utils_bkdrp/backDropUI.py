@@ -18,18 +18,10 @@ except ImportError:
 
 
 import nuke
-import nukescripts
-
-from scripts.backDrops.utils_bkdrp import backDropFunctions
-
-from variables import CCVariables
-ccVars = CCVariables()
+import backDropFunctions
 
 # ----- Directory paths -----
-SCRIPTS_DIR = ccVars.SCRIPTS_DIR
-PRESETS_PATH = os.path.join(SCRIPTS_DIR, 'backDrops', 'utils_bkdrp', 'backdrop_presets.json')
-
-
+PRESETS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'backdrop_presets.json')
 
 # ----- Tool Variables -----
 PRESET_COLUMNS = 3  # buttons per row in the preset grid
