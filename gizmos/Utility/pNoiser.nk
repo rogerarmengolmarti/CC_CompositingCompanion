@@ -1,7 +1,12 @@
-#! E:/Programs/Foundry/Nuke/Nuke_v15_2/nuke-15.2.9.dll -nx
+set cut_paste_input [stack 0]
 version 15.2 v9
+push $cut_paste_input
 Group {
- tile_color 0x238c66ff
+ name pNoiser
+ tile_color 0x29a580ff
+ selected true
+ xpos 6880
+ ypos 6928
  disable_group_view true
  addUserKnob {20 general_TAB l General}
  addUserKnob {26 Strength_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nStrength"}
@@ -11,7 +16,7 @@ Group {
  gSize 0.5
  addUserKnob {7 bSize l "Blue Strength"}
  bSize 0.5
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {26 size_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nSize"}
  addUserKnob {7 redSize l "Red Size" R 0 100}
  redSize 10
@@ -19,14 +24,14 @@ Group {
  greenSize 10
  addUserKnob {7 blueSize l "Blue Size" R 0 100}
  blueSize 10
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {26 offset_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nOffset"}
  addUserKnob {7 rOffset l "Red Offset" R 0 10}
  addUserKnob {7 gOffset l "Green Offset" R 0 10}
  gOffset 1
  addUserKnob {7 bOffset l "Blue Offset" R 0 10}
  bOffset 2
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {26 general_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nGeneral"}
  addUserKnob {4 projectMethod l "Project Method" M {UV Pref P}}
  projectMethod Pref
@@ -50,14 +55,14 @@ Group {
   xpos 335
   ypos -217
  }
-set N362d4000 [stack 0]
+set N182e1400 [stack 0]
  Dot {
   name Dot10
   xpos 335
   ypos 417
  }
-set N43a85400 [stack 0]
-push $N362d4000
+set N182e1800 [stack 0]
+push $N182e1400
  Unpremult {
   name Unpremult1
   xpos 183
@@ -69,13 +74,13 @@ push $N362d4000
   xpos 101
   ypos -217
  }
-set N9621a400 [stack 0]
+set N182e1c00 [stack 0]
  Dot {
   name Dot5
   xpos -33
   ypos -217
  }
-set Na1836800 [stack 0]
+set N18436000 [stack 0]
  Dot {
   name Dot7
   xpos -205
@@ -111,13 +116,12 @@ add_layer {P P.X P.Y P.Z P.x P.y P.z P.red P.green P.blue P.alpha}
   xpos -239
   ypos -66
  }
-set N9564a800 [stack 0]
  Dot {
   name Dot9
   xpos -205
   ypos 107
  }
-push $Na1836800
+push $N18436000
 add_layer {Pref Pref.red Pref.green Pref.blue Pref.alpha}
  Shuffle2 {
   fromInput1 {
@@ -153,7 +157,7 @@ add_layer {Pref Pref.red Pref.green Pref.blue Pref.alpha}
   xpos -33
   ypos -18
  }
-push $N9621a400
+push $N182e1c00
 add_layer {uv_extra uv_extra.red uv_extra.green uv_extra.blue}
  Shuffle2 {
   fromInput1 {
@@ -189,7 +193,7 @@ add_layer {uv_extra uv_extra.red uv_extra.green uv_extra.blue}
   xpos -783
   ypos -796
  }
-set N9fd4a500 [stack 0]
+set N1845be00 [stack 0]
  Noise {
   output {-rgba.red -rgba.green rgba.blue rgba.alpha}
   size {{parent.blueSize}}
@@ -205,7 +209,7 @@ set N9fd4a500 [stack 0]
   xpos -791
   ypos -339
  }
-push $N9fd4a500
+push $N1845be00
  Noise {
   output {-rgba.red rgba.green -rgba.blue rgba.alpha}
   size {{parent.greenSize}}
@@ -221,7 +225,7 @@ push $N9fd4a500
   xpos -787
   ypos -446
  }
-push $N9fd4a500
+push $N1845be00
  Noise {
   output {rgba.red -rgba.green -rgba.blue rgba.alpha}
   size {{parent.redSize}}
@@ -237,7 +241,7 @@ push $N9fd4a500
   xpos -787
   ypos -548
  }
-push $N9fd4a500
+push $N1845be00
  Merge2 {
   inputs 2
   name Merge1
@@ -256,6 +260,7 @@ push $N9fd4a500
   xpos -621
   ypos -333
  }
+set N1a0c0000 [stack 0]
  Expression {
   expr0 (r*2)-1
   expr1 (g*2)-1
@@ -316,7 +321,7 @@ push $N9fd4a500
   xpos -33
   ypos 620
  }
-push $N43a85400
+push $N182e1800
  Merge2 {
   inputs 2
   operation plus
@@ -332,19 +337,18 @@ push $N43a85400
   xpos 301
   ypos 711
  }
-push $N9564a800
+push $N1a0c0000
 push 0
  Viewer {
   inputs 2
-  frame 1025
-  frame_range 1001-1100
+  frame_range 1-100
   input_number 1
   colour_sample_bbox {-0.006250000093 0.314062506 -0.005208333489 0.3151041567}
   samplepoints {
    {-0.006250000093 0.314062506}
   }
-  viewerProcess "ACES 1.0 SDR-video (sRGB)"
-  monitorOutNDISenderName "NukeX - brusher_v104 - Viewer1"
+  monitorOutNDISenderName "NukeX - untitled - Viewer1"
+  monitorOutOutputTransform rec709
   name Viewer1
   xpos -353
   ypos 636

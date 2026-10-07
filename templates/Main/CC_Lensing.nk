@@ -1,0 +1,2896 @@
+set cut_paste_input [stack 0]
+version 15.2 v9
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x4b4056ff
+ label <center>LENSING
+ note_font "Verdana Bold"
+ note_font_size 200
+ selected true
+ xpos 2624
+ ypos -3119
+ bdwidth 1484
+ bdheight 7697
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0x435563ff
+ label Breathing
+ note_font_size 42
+ selected true
+ xpos 2980
+ ypos -1368
+ bdwidth 603
+ bdheight 336
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x4f7053ff
+ label Defocus
+ note_font_size 42
+ selected true
+ xpos 2975
+ ypos 149
+ bdwidth 618
+ bdheight 338
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x7f7f7fff
+ label Flaring
+ note_font_size 42
+ selected true
+ xpos 2973
+ ypos 1141
+ bdwidth 624
+ bdheight 734
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x62626dff
+ label "Sensor Dirt"
+ note_font_size 42
+ selected true
+ xpos 2979
+ ypos 2530
+ bdwidth 608
+ bdheight 1100
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x7f7447ff
+ label Diffussion
+ note_font_size 42
+ selected true
+ xpos 2977
+ ypos 1988
+ bdwidth 622
+ bdheight 426
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x40705aff
+ label "Chromatic Abb"
+ note_font_size 42
+ selected true
+ xpos 2975
+ ypos -273
+ bdwidth 618
+ bdheight 329
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0x4b5963ff
+ label "Lens Distortion"
+ note_font_size 42
+ selected true
+ xpos 2975
+ ypos -930
+ bdwidth 617
+ bdheight 580
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x434343ff
+ label Vignette
+ note_font_size 42
+ selected true
+ xpos 2968
+ ypos 634
+ bdwidth 625
+ bdheight 360
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x6b6b6bff
+ label Sensor
+ note_font_size 42
+ selected true
+ xpos 2972
+ ypos 3727
+ bdwidth 617
+ bdheight 415
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x5b5ba0ff
+ label "Color Correct"
+ note_font_size 42
+ selected true
+ xpos 2985
+ ypos -2017
+ bdwidth 600
+ bdheight 478
+ z_order 1
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode9
+ tile_color 0x3e483fff
+ label "Clean Channels"
+ note_font_size 42
+ selected true
+ xpos 2993
+ ypos -2353
+ bdwidth 587
+ bdheight 164
+ z_order 1
+}
+push $cut_paste_input
+Dot {
+ name Dot1
+ selected true
+ xpos 3475
+ ypos -3437
+}
+Remove {
+ operation keep
+ channels rgba
+ name Remove2
+ selected true
+ xpos 3441
+ ypos -2302
+}
+Crop {
+ box {0 0 3840 2160}
+ name Crop2
+ selected true
+ xpos 3441
+ ypos -2252
+}
+Group {
+ name fxT_chromaticAberration1
+ help "Chromatic Aberration tool with a bunch of options for matching the plate's aberration.\n\nChoose between transform and godrays offset in the mode-dropdown menu.\nHappy channel-shifting!\n\nDeveloped by - Tor Andreassen - fxtor.net"
+ tile_color 0xf9ff00ff
+ note_font Verdana
+ selected true
+ xpos 3441
+ ypos -76
+ addUserKnob {20 fxT_chromaticAberrationTAB l fxT_chromaticAberration}
+ addUserKnob {41 center T centerPoint.center}
+ addUserKnob {22 unlockReset l reset/lock t "By default the centerpoint is locked to the center of the input format.\n\nClick this button to unlock the values. This will also set the centerpoint to the center of the input format." -STARTLINE T "def resetLock():\n    me = nuke.thisNode()\n    lockValue = me\['center'].enabled()\n    x = 'width()/2'\n    y = 'height()/2'\n    x2 = nuke.thisNode().width()/2\n    y2 = nuke.thisNode().height()/2\n\n    \n\n    if lockValue == True:\n        print 'trueeeee'\n        me\['center'].setEnabled(not lockValue)\n        me\['center'].clearAnimated()\n        me\['center'].setExpression(x,0)\n        me\['center'].setExpression(y,1)\n    elif lockValue == False:\n        me\['center'].clearAnimated()\n        me\['center'].setValue(\[x2,y2])\n        me\['center'].setEnabled(not lockValue)\n\nresetLock()"}
+ addUserKnob {26 ""}
+ addUserKnob {4 mode l "aberration mode" t "Choose the chromatic aberration method.\nScale with Transforms or with Godrays.\n\nGodrays will give you a smearing effect between the channels, which can look more realistic." M {"godrays scale" "transforms scale" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {7 redScale l "<font  color='#de0000'>Red scale</font>" t "Red channel scale size" R -0.5 1.5}
+ redScale 0.9986
+ addUserKnob {7 greenScale l "<font  color='#7ebd64'>Green scale</font>" t "Green channel scale size" R -0.5 1.5}
+ greenScale 0.999
+ addUserKnob {7 blueScale l "<font color='#2279c3'>Blue scale</font>" t "Blue channel scale size" R -0.5 1.5}
+ blueScale 1
+ addUserKnob {26 ""}
+ addUserKnob {14 redChBlur l "<font color='#de0000'>Red Cannel Blur</font>" t "Red channel blur size" R 0 100}
+ addUserKnob {14 greenChBlur l "<font color='#7ebd64'>Green Cannel Blur</font>" t "Green channel blur size" R 0 100}
+ addUserKnob {14 blueChBlur l "<font color='#2279c3'>Blue Channel Blur</font>" t "Blue channel blur size" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {20 extraOffsetControlsGROUP l "EXTRA GLOBAL OFFSET CONTROLS" n 1}
+ extraOffsetControlsGROUP 0
+ addUserKnob {6 activateEGOC l "activate extra global controls" t "Enable to activate the extra global offset controls.\n\nThis will give you more offset controls, but can cause some unwanted filtering.\n\nIf you want to use these controls, but it's causing too much filtering, try to restore some details with the 'restore luminance' checkbox.\n\nThese controls are intended for special cases to make it esier to match the plate's aberration. Pick your battles; more contol can cause some extra filtering." +STARTLINE}
+ addUserKnob {7 offsetRotation l Rotation t "Rotation offset control.\n\nThis is useful for shifting the direction of the offset." R -10 10}
+ addUserKnob {7 offsetX l X-axis t "X-axis offset control" R -20 20}
+ addUserKnob {7 offsetY l Y-axis t "Y-axis offset control" R -20 20}
+ addUserKnob {7 offsetTop l Top t "Offset control for the top of the frame.\n\nThis will offset the channels more on the top of the frame than the bottom." R -0.05 0.05}
+ addUserKnob {7 offsetBottom l Bottom t "Offset control for the bottom of the frame\n\nThis will offset the channels more on the bottom of the frame than the top" R -0.05 0.05}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 centerMaskGROUP l "CENTER MASK CONTROLS" n 1}
+ addUserKnob {6 centerMask l "use center mask" t "Enable to remove aberration in the center of the frame.\n\nThis \"mimics\" the real world lense where less aberration is applied to the center of the frame.\n\nYou can addjust the opacity, softness and size of the 'centerMask' with the sliders below.\nFor convience, turn on the 'displayMask' while addjusting the size." +STARTLINE}
+ addUserKnob {6 displayMask l "display mask" t "Enable to display the affect-area of the center mask" +STARTLINE}
+ addUserKnob {4 switchMaskColor l "|   display color" t "Choose what color to display when 'displayMask' in enabled" -STARTLINE M {red green blue "" "" "" "" "" "" "" "" ""}}
+ switchMaskColor blue
+ addUserKnob {14 displayMaskScale l scale t "Addjust the scale of the centerMask. This lets you decide how much of the image is affected by the centerMask" R 0 100}
+ displayMaskScale {0.5 1}
+ addUserKnob {16 centerMaskOpacity l opacity t "Addjust the center mask opacity.\n\nThis allows for controlling the opacity of the aberration showing in the center of the frame when the 'centerMask' box is enabled"}
+ centerMaskOpacity 1
+ addUserKnob {41 centerMaskFalloff l falloff T maskFalloff.centerMaskFalloff}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {6 restoreLuminance l "restore luminance  |" t "Restore the original luminace.\n\nThis can help bring back sharpness if the channel offset operations has caused too much filtering." +STARTLINE}
+ addUserKnob {7 luminancePercent l amount t "Blend between comp luminance and input luminance to decide how much of the original luminance you want to restore.\n\n0 = comp luma (no restoration)\n1 = input luma (full restoration)\n\nThis only takes effect if the checkbox is checked." -STARTLINE}
+ luminancePercent 1
+ addUserKnob {26 ""}
+ addUserKnob {6 Rbypass l "&nbsp;<font color='#de0000'> Red</font><font color='#717171'>bypass</font>" t "Enable to bypass alteration to the red channel" +STARTLINE}
+ addUserKnob {6 Gbypass l "&nbsp;<font color='#7ebd64'> Green</font><font color='#717171'>bypass</font>" t "Enable to bypass alteration to the green channel" -STARTLINE}
+ addUserKnob {6 Bbypass l "&nbsp;<font color='#2279c3'> Blue</font><font color='#717171'>bypass</font>" t "Enable to bypass alteration to the blue channel" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {7 chromaticAberrationMix l Mix t "Dissolve between the original input at 0 and the full chromatic aberration at 1."}
+ chromaticAberrationMix 1
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_chromaticAberration v3.0 © Tor Andreassen - www.fxtor.net</font>"}
+}
+ BackdropNode {
+  inputs 0
+  name backdrop02
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "RGB channel seperation"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -838
+  ypos -1175
+  bookmark false
+  bdwidth 2869
+  bdheight 107
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop03
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "RGB channel offsets"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -839
+  ypos -1037
+  bookmark false
+  bdwidth 2869
+  bdheight 406
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop04
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "induvidual channel blur"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -840
+  ypos -595
+  bookmark false
+  bdwidth 2873
+  bdheight 127
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop05
+  tile_color 0x3a3a3aff
+  gl_color 0x44444401
+  label "mask input"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos 2090
+  ypos -1556
+  bookmark false
+  bdwidth 662
+  bdheight 3664
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop08
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label "mix between added chromatic aberration and original input"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -843
+  ypos 701
+  bookmark false
+  bdwidth 2879
+  bdheight 130
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop1
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "center mask (less aberration in the center of the image)"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -838
+  ypos -271
+  bookmark false
+  bdwidth 2872
+  bdheight 490
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop2
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "build RGB"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -842
+  ypos 258
+  bookmark false
+  bdwidth 2877
+  bdheight 151
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop3
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label "display CenterMask"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -848
+  ypos 1527
+  bookmark false
+  bdwidth 2881
+  bdheight 431
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop4
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label "restore luminence"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -844
+  ypos 873
+  bookmark false
+  bdwidth 2884
+  bdheight 447
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop5
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label "keep input bbox"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -848
+  ypos 1999
+  bookmark false
+  bdwidth 2883
+  bdheight 111
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop6
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label "keep input alpha channel"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -843
+  ypos 458
+  bookmark false
+  bdwidth 2878
+  bdheight 202
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop7
+  tile_color 0x3f4e69ff
+  gl_color 0x5f7a8701
+  label "bypass channels"
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -840
+  ypos -430
+  bookmark false
+  bdwidth 2873
+  bdheight 122
+ }
+ BackdropNode {
+  inputs 0
+  name backdrop8
+  tile_color 0x3f4e69ff
+  gl_color 0x44444401
+  label mask
+  note_font "Arial Black"
+  note_font_size 20
+  note_font_color 0xffffffff
+  xpos -846
+  ypos 1351
+  bookmark false
+  bdwidth 2881
+  bdheight 132
+ }
+ Input {
+  inputs 0
+  name rgba
+  label "\[value number]"
+  xpos 781
+  ypos -1503
+ }
+set N1798a400 [stack 0]
+ Dot {
+  name Dot25
+  tile_color 0x272727ff
+  xpos 809
+  ypos -1393
+ }
+set N179ac000 [stack 0]
+ NoOp {
+  name centerPoint
+  xpos 660
+  ypos -1390
+  addUserKnob {20 centerPoint}
+  addUserKnob {12 center +DISABLED}
+  center {{width()/2} {height()/2}}
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  tile_color 0x545454ff
+  gl_color 0x545454ff
+  label "<left>info: \n\ncopy node is there to recreate the input alpha.\nif an alpha does not extist, a solid alpha will be copied in.\nthis is to not get errors when using the node on inputs with no alpha channel.\n\nTo restore the original blank alpha channel,\nthe remove node grabs the input alpha value and removes\nor keeps the alpha channel based on if an input alpha exists"
+  xpos 1193
+  ypos 498
+ }
+push $N179ac000
+ NoOp {
+  name autoAlphaCheck1
+  xpos 896
+  ypos -1390
+  addUserKnob {20 autoAlphaCheck}
+  addUserKnob {6 a +STARTLINE}
+  a {{"\[string first \".a\" \[channels \[input this 0]]]>-1"}}
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  tile_color 0x545454ff
+  gl_color 0x545454ff
+  label "<left>info: \n\nThe nodes activated by default (only scale) controls the channelOffset.\nThis is the basic setup, the other transforms stacked under the scale-nodes are by default disabled to avoid filtering issus when extra offset controls is not needed.\n\nIf the 'activate global controls' checkbox is activated, all the transforms will be active.\nThis will give you access to all the extra offset controls, but can also cause some extra unwanted filtering. \n\nIf filtering becomes an issue, but you still want to use the extra controls, try using  the restore luminance option to restore detail.\n\nPick you battle:  more contol == some loss in detail"
+  xpos -825
+  ypos -974
+ }
+ NoOp {
+  inputs 0
+  name values
+  xpos 432
+  ypos -720
+  hide_input true
+  addUserKnob {20 values}
+  addUserKnob {16 base}
+  base 0.1
+  addUserKnob {16 red}
+  red {{-1*blue}}
+  addUserKnob {16 green}
+  green {{base}}
+  addUserKnob {16 blue}
+  blue {{base+(green*2)}}
+ }
+ Input {
+  inputs 0
+  name mask
+  label "\[value number]"
+  xpos 2578
+  ypos -1410
+  number 1
+ }
+ Dot {
+  name Dot24
+  tile_color 0x272727ff
+  xpos 2606
+  ypos -1343
+ }
+set N179ad000 [stack 0]
+ NoOp {
+  name autoAlphaCheck2
+  xpos 2456
+  ypos -1340
+  addUserKnob {20 autoAlphaCheck}
+  addUserKnob {6 a +STARTLINE}
+  a {{"\[string first \".a\" \[channels \[input this 0]]]>-1\n\n"}}
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  tile_color 0x545454ff
+  gl_color 0x545454ff
+  label "checking if the mask input has an existing alpha channel.\nif alpha channel exists, mask will use the input alpha,\nif no alpha exists, a solid alpha will be used (same as not masking)"
+  xpos 2402
+  ypos -1220
+ }
+push $N1798a400
+ Dot {
+  name Dot2
+  tile_color 0x272727ff
+  xpos -998
+  ypos -1502
+ }
+ Dot {
+  name Dot23
+  tile_color 0x272727ff
+  xpos -998
+  ypos -192
+ }
+set N179adc00 [stack 0]
+ Dot {
+  name Dot13
+  tile_color 0x272727ff
+  xpos -998
+  ypos 63
+ }
+set N179d2000 [stack 0]
+ Dot {
+  name Dot21
+  tile_color 0x272727ff
+  xpos -998
+  ypos 758
+ }
+set N179d2400 [stack 0]
+ Dot {
+  name Dot34
+  tile_color 0x272727ff
+  xpos -998
+  ypos 1099
+ }
+set N179d2800 [stack 0]
+ Dot {
+  name Dot7
+  tile_color 0x272727ff
+  xpos -998
+  ypos 1405
+ }
+set N179d2c00 [stack 0]
+ Dot {
+  name Dot22
+  tile_color 0x272727ff
+  xpos -998
+  ypos 1586
+ }
+set N179d3000 [stack 0]
+ Dot {
+  name Dot18
+  tile_color 0x272727ff
+  xpos -998
+  ypos 2057
+ }
+push $N179adc00
+ Remove {
+  name Remove1
+  xpos -491
+  ypos -193
+ }
+ Radial {
+  area {0 0 {input.width()} {input.height()}}
+  name Radial2
+  xpos -491
+  ypos -161
+ }
+ Expression {
+  expr0 r
+  expr1 g
+  expr2 b
+  expr3 a<centerMaskFalloff?smoothstep(0,centerMaskFalloff,a):1
+  name maskFalloff
+  xpos -491
+  ypos -137
+  addUserKnob {20 maskFalloff l "mask falloff"}
+  addUserKnob {7 centerMaskFalloff l maskFalloff t "Adjust the alpha falloff of the 'centerMask'.\n\nThis will let you addjust how hard the transition is between the affected and not affected area when the centerMask is activated." R 0.2 0.75}
+  centerMaskFalloff 0.5
+ }
+ Transform {
+  scale {{parent.displayMaskScale.w} {parent.displayMaskScale.h}}
+  center {{(input.width())/2} {(input.height())/2}}
+  name Transform2
+  label centerMaskScale
+  xpos -491
+  ypos -113
+ }
+ Multiply {
+  channels rgba
+  value {{parent.centerMaskOpacity}}
+  name Multiply4
+  xpos -491
+  ypos -81
+ }
+ Clamp {
+  name Clamp1
+  xpos -491
+  ypos -57
+ }
+ Dot {
+  name Dot10
+  tile_color 0x272727ff
+  xpos -463
+  ypos 3
+ }
+set N179d3800 [stack 0]
+ Dot {
+  name Dot15
+  tile_color 0x272727ff
+  xpos -929
+  ypos 3
+ }
+ Dot {
+  name Dot14
+  tile_color 0x272727ff
+  xpos -929
+  ypos 1841
+ }
+push $N179d3000
+ Remove {
+  name Remove4
+  xpos -65
+  ypos 1585
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  tile_color 0xffffffff
+  label solidAlpha
+  xpos -65
+  ypos 1645
+ }
+set N17a0b400 [stack 0]
+ Add {
+  value {0 0 1 1}
+  name Add3
+  tile_color 0xffff
+  xpos 56
+  ypos 1701
+ }
+push $N17a0b400
+ Add {
+  value {0 1 0 1}
+  name Add2
+  tile_color 0xff00ff
+  xpos -65
+  ypos 1702
+ }
+push $N17a0b400
+ Add {
+  value {1 0 0 1}
+  name Add1
+  tile_color 0xff0000ff
+  xpos -197
+  ypos 1704
+ }
+ Switch {
+  inputs 3
+  which {{parent.switchMaskColor}}
+  name Switch2
+  xpos -65
+  ypos 1784
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -65
+  ypos 1840
+ }
+ Premult {
+  name Premult1
+  xpos -65
+  ypos 1904
+ }
+push $N179ac000
+ Dot {
+  name Dot5
+  tile_color 0x272727ff
+  xpos 809
+  ypos -1272
+ }
+set N17a1e400 [stack 0]
+ Dot {
+  name Dot6
+  tile_color 0x272727ff
+  xpos 1668
+  ypos -1272
+ }
+set N17a1e800 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle3
+  tile_color 0xffffffff
+  label solidAlpha
+  xpos 2457
+  ypos -1273
+ }
+push $N179ad000
+ Switch {
+  inputs 2
+  which {{!parent.autoAlphaCheck2.a}}
+  name Switch1
+  tile_color 0x666666ff
+  label AutoMaskCheck
+  xpos 2578
+  ypos -1273
+ }
+ Dot {
+  name Dot4
+  tile_color 0x272727ff
+  label mask
+  note_font "Arial Black"
+  note_font_size 25
+  xpos 2606
+  ypos 1405
+ }
+push $N179d2800
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace1
+  label "Lin --> YCbCr"
+  xpos 1104
+  ypos 1098
+ }
+push $N1798a400
+ Dot {
+  name Dot11
+  tile_color 0x272727ff
+  xpos 2338
+  ypos -1502
+ }
+ Dot {
+  name Dot26
+  tile_color 0x272727ff
+  xpos 2338
+  ypos 362
+ }
+set N17a1f400 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle5
+  tile_color 0xffffffff
+  label solidAlpha
+  xpos 2164
+  ypos 436
+ }
+push $N17a1f400
+ Dot {
+  name Dot8
+  tile_color 0x272727ff
+  xpos 2338
+  ypos 520
+ }
+ Switch {
+  inputs 2
+  which {{!autoAlphaCheck1.a}}
+  name Switch3
+  tile_color 0x666666ff
+  label AutoMaskCheck
+  xpos 2164
+  ypos 519
+ }
+push $N179d3800
+push $N179d2000
+ Shuffle {
+  alpha white
+  name Shuffle2
+  label "\[knob in]"
+  xpos -761
+  ypos 62
+ }
+ Dot {
+  name Dot17
+  tile_color 0x272727ff
+  xpos -604
+  ypos 60
+ }
+set N17a1fc00 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha white
+  name redShuffle1
+  tile_color 0xff0000ff
+  xpos -632
+  ypos 154
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge9
+  xpos -491
+  ypos 154
+ }
+push $N17a1e400
+ Dot {
+  name Dot9
+  tile_color 0x272727ff
+  xpos 100
+  ypos -1272
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha white
+  name redShuffle
+  tile_color 0xff0000ff
+  xpos 72
+  ypos -1107
+ }
+set N17a49200 [stack 0]
+ Dot {
+  name Dot27
+  tile_color 0x272727ff
+  xpos -92
+  ypos -1110
+ }
+ Dot {
+  name Dot28
+  tile_color 0x272727ff
+  xpos -89
+  ypos -353
+ }
+push $N17a49200
+ TransformMasked {
+  channels rgb
+  scale {{parent.redScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name redTransform1
+  tile_color 0xff0000ff
+  label "scale\n\[value filter]"
+  xpos -27
+  ypos -960
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.red)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform23
+  tile_color 0xff0000ff
+  label "top offset: skewX\n\[value filter]"
+  xpos -27
+  ypos -886
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.red)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform24
+  tile_color 0xff0000ff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos -27
+  ypos -844
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.red/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name redTransform25
+  tile_color 0xff0000ff
+  label "rotate\n\[value filter]"
+  xpos -27
+  ypos -802
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.red} {parent.offsetY*values.red}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name redTransform26
+  tile_color 0xff0000ff
+  label "x,y\n\[value filter]"
+  xpos -27
+  ypos -760
+  disable {{!parent.activateEGOC}}
+ }
+push $N17a49200
+ GodRays {
+  channels rgb
+  scale {{parent.redScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  invert_mask true
+  name GodRays1
+  tile_color 0xff0000ff
+  label scale
+  xpos 72
+  ypos -955
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.red)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform13
+  tile_color 0xff0000ff
+  label "top offset: skewX\n\[value filter]"
+  xpos 72
+  ypos -888
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.red)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform14
+  tile_color 0xff0000ff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos 72
+  ypos -846
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.red/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name redTransform15
+  tile_color 0xff0000ff
+  label "rotate\n\[value filter]"
+  xpos 72
+  ypos -804
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.red} {parent.offsetY*values.red}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name redTransform21
+  tile_color 0xff0000ff
+  label "x,y\n\[value filter]"
+  xpos 74
+  ypos -762
+  disable {{!parent.activateEGOC}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.mode}}
+  name modeSwitch1
+  tile_color 0x666666ff
+  xpos 74
+  ypos -680
+ }
+ Blur {
+  channels rgb
+  size {{parent.redChBlur}}
+  name BlurRedCh
+  tile_color 0xff0000ff
+  xpos 74
+  ypos -512
+ }
+ Switch {
+  inputs 2
+  which {{parent.Rbypass}}
+  name bypassRedSwitch
+  tile_color 0x666666ff
+  xpos 74
+  ypos -350
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 74
+  ypos 154
+  disable {{!(parent.centerMask)}}
+ }
+ Dot {
+  name Dot1
+  tile_color 0x272727ff
+  xpos 102
+  ypos 305
+ }
+push $N179d3800
+ Dot {
+  name Dot20
+  tile_color 0x272727ff
+  xpos 590
+  ypos 3
+ }
+set N17aad000 [stack 0]
+push $N17a1fc00
+ Dot {
+  name Dot12
+  tile_color 0x272727ff
+  xpos 435
+  ypos 60
+ }
+set N17aad400 [stack 0]
+ Shuffle {
+  red green
+  blue green
+  alpha white
+  name greenShuffle1
+  tile_color 0xff00ff
+  xpos 407
+  ypos 145
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge11
+  xpos 562
+  ypos 145
+ }
+push $N17a1e400
+ Shuffle {
+  red green
+  blue green
+  alpha white
+  name greenShuffle
+  tile_color 0xff00ff
+  xpos 781
+  ypos -1112
+ }
+set N17b27e00 [stack 0]
+ Dot {
+  name Dot31
+  tile_color 0x272727ff
+  xpos 601
+  ypos -1115
+ }
+ Dot {
+  name Dot29
+  tile_color 0x272727ff
+  xpos 604
+  ypos -364
+ }
+push $N17b27e00
+ TransformMasked {
+  channels rgb
+  scale {{parent.greenScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name greenTransform1
+  tile_color 0xff00ff
+  label "scale\n\[value filter]"
+  xpos 669
+  ypos -970
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.green)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform3
+  tile_color 0xff00ff
+  label "top offset: skewX\n\[value filter]"
+  xpos 669
+  ypos -899
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.green)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform4
+  tile_color 0xff00ff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos 669
+  ypos -857
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.green/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name greenTransform7
+  tile_color 0xff00ff
+  label "rotate\n\[value filter]"
+  xpos 669
+  ypos -815
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.green} {parent.offsetY*values.green}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name greenTransform8
+  tile_color 0xff00ff
+  label "x, y\n\[value filter]"
+  xpos 669
+  ypos -773
+  disable {{!parent.activateEGOC}}
+ }
+push $N17b27e00
+ GodRays {
+  channels rgb
+  scale {{parent.greenScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  invert_mask true
+  name GodRays2
+  tile_color 0xff00ff
+  label scale
+  xpos 781
+  ypos -970
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.green)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform10
+  tile_color 0xff00ff
+  label "top offset: skewX\n\[value filter]"
+  xpos 781
+  ypos -902
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.green)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform16
+  tile_color 0xff00ff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos 781
+  ypos -860
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.green/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name greenTransform9
+  tile_color 0xff00ff
+  label "rotate\n\[value filter]"
+  xpos 781
+  ypos -818
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.green} {parent.offsetY*values.green}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name greenTransform10
+  tile_color 0xff00ff
+  label "x, y\n\[value filter]"
+  xpos 781
+  ypos -776
+  disable {{!parent.activateEGOC}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.mode}}
+  name modeSwitch3
+  tile_color 0x666666ff
+  xpos 782
+  ypos -686
+ }
+ Blur {
+  channels rgb
+  size {{parent.greenChBlur}}
+  name BlurGeenCh
+  tile_color 0xff00ff
+  xpos 782
+  ypos -518
+ }
+ Switch {
+  inputs 2
+  which {{parent.Gbypass}}
+  name bypassGreenSwitch
+  tile_color 0x666666ff
+  xpos 785
+  ypos -361
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 785
+  ypos 145
+  disable {{!(parent.centerMask)}}
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  blue black
+  alpha black
+  name ShuffleCopy1
+  xpos 782
+  ypos 308
+ }
+ Dot {
+  name Dot3
+  tile_color 0x272727ff
+  xpos 810
+  ypos 360
+ }
+push $N17aad000
+ Dot {
+  name Dot19
+  tile_color 0x272727ff
+  xpos 1421
+  ypos 3
+ }
+push $N17aad400
+ Dot {
+  name Dot16
+  tile_color 0x272727ff
+  xpos 1284
+  ypos 60
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha white
+  name blueShuffle1
+  tile_color 0xffff
+  xpos 1256
+  ypos 145
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge8
+  xpos 1393
+  ypos 145
+ }
+push $N17a1e800
+ Shuffle {
+  red blue
+  green blue
+  alpha white
+  name blueShuffle
+  tile_color 0xffff
+  xpos 1640
+  ypos -1125
+ }
+set N1813ef00 [stack 0]
+ Dot {
+  name Dot33
+  tile_color 0x272727ff
+  xpos 1467
+  ypos -1128
+ }
+ Dot {
+  name Dot32
+  tile_color 0x272727ff
+  xpos 1467
+  ypos -370
+ }
+push $N1813ef00
+ TransformMasked {
+  channels rgb
+  scale {{parent.blueScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name blueTransform1
+  tile_color 0xffff
+  label "scale\n\[value filter]"
+  xpos 1532
+  ypos -970
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.blue)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform6
+  tile_color 0xffff
+  label "top offset: skewX\n\[value filter]"
+  xpos 1532
+  ypos -874
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.blue)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform7
+  tile_color 0xffff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos 1532
+  ypos -832
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.blue/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name blueTransform7
+  tile_color 0xffff
+  label "rotate\n\[value filter]"
+  xpos 1532
+  ypos -790
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.blue} {parent.offsetY*values.blue}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name blueTransform8
+  tile_color 0xffff
+  label "x,y\n\[value filter]"
+  xpos 1532
+  ypos -748
+  disable {{!parent.activateEGOC}}
+ }
+push $N1813ef00
+ GodRays {
+  channels rgb
+  scale {{parent.blueScale}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  invert_mask true
+  name GodRays3
+  tile_color 0xffff
+  label scale
+  xpos 1640
+  ypos -970
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetTop*(values.blue)}}
+  center {{parent.centerPoint.input.width()/2} 0}
+  name redTransform8
+  tile_color 0xffff
+  label "top offset: skewX\n\[value filter]"
+  xpos 1640
+  ypos -876
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  skewX {{parent.offsetBottom*(values.blue)}}
+  center {{parent.centerPoint.input.width()/2} {parent.centerPoint.input.height()}}
+  name redTransform9
+  tile_color 0xffff
+  label "bottom offset: skewY\n\[value filter]"
+  xpos 1640
+  ypos -834
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  rotate {{parent.offsetRotation*(values.blue/10)}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name blueTransform9
+  tile_color 0xffff
+  label "rotate\n\[value filter]"
+  xpos 1640
+  ypos -792
+  disable {{!parent.activateEGOC}}
+ }
+ TransformMasked {
+  channels rgb
+  translate {{parent.offsetX*values.blue} {parent.offsetY*values.blue}}
+  center {{parent.centerPoint.center.x} {parent.centerPoint.center.y}}
+  name blueTransform10
+  tile_color 0xffff
+  label "x,y\n\[value filter]"
+  xpos 1640
+  ypos -750
+  disable {{!parent.activateEGOC}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.mode}}
+  name modeSwitch5
+  tile_color 0x666666ff
+  xpos 1641
+  ypos -675
+ }
+ Blur {
+  channels rgb
+  size {{parent.blueChBlur}}
+  name BlurBlueCh
+  tile_color 0xffff
+  xpos 1641
+  ypos -537
+ }
+ Switch {
+  inputs 2
+  which {{parent.Bbypass}}
+  name bypassBlueSwitch
+  tile_color 0x666666ff
+  xpos 1641
+  ypos -367
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos 1644
+  ypos 145
+  disable {{!(parent.centerMask)}}
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  alpha black
+  name ShuffleCopy2
+  xpos 1641
+  ypos 363
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 1641
+  ypos 519
+ }
+ Remove {
+  channels alpha
+  name Remove2
+  xpos 1641
+  ypos 577
+  disable {{parent.autoAlphaCheck1.a}}
+ }
+push $N179d2400
+ Dissolve {
+  inputs 2
+  which {{parent.chromaticAberrationMix}}
+  name Dissolve1
+  xpos 1641
+  ypos 757
+ }
+ Dot {
+  name Dot36
+  tile_color 0x272727ff
+  xpos 1669
+  ypos 903
+ }
+ Dot {
+  name Dot30
+  tile_color 0x272727ff
+  xpos 1669
+  ypos 1050
+ }
+set N1814d800 [stack 0]
+ Colorspace {
+  colorspace_out YCbCr
+  name Colorspace5
+  label "Lin --> YCbCr"
+  xpos 1511
+  ypos 1049
+ }
+set N18212500 [stack 0]
+ Dissolve {
+  inputs 2
+  channels rgb
+  which {{parent.luminancePercent}}
+  name Dissolve2
+  xpos 1337
+  ypos 1102
+ }
+push $N18212500
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  name Copy11
+  xpos 1511
+  ypos 1098
+ }
+ Colorspace {
+  colorspace_in YCbCr
+  name Colorspace6
+  label "YCbCr --> Lin"
+  xpos 1511
+  ypos 1151
+ }
+push $N1814d800
+ Switch {
+  inputs 2
+  which {{parent.restoreLuminance}}
+  name restore_luminance
+  tile_color 0x666666ff
+  xpos 1641
+  ypos 1155
+ }
+push $N179d2c00
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 1641
+  ypos 1404
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 1641
+  ypos 1907
+  disable {{!(parent.displayMask)}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 1641
+  ypos 2062
+ }
+ Output {
+  name Output1
+  xpos 1641
+  ypos 2179
+ }
+end_group
+Group {
+ name Vignette1
+ help "author - Marc Rienzo"
+ tile_color 0x64554b00
+ note_font_color 0xabff8800
+ selected true
+ xpos 3441
+ ypos 764
+ addUserKnob {20 "" l User}
+ addUserKnob {7 amount}
+ amount 0.26
+ addUserKnob {7 scale l size R 0 2}
+ scale 1.64
+ addUserKnob {7 softness}
+ softness 0.415
+ addUserKnob {41 tint T Grade1.add}
+ addUserKnob {26 ""}
+ addUserKnob {7 bl l "bottom left mix"}
+ bl 1
+ addUserKnob {7 br l "bottom right mix"}
+ br 1
+ addUserKnob {7 tl l "top left mix"}
+ tl 1
+ addUserKnob {7 tr l "top right mix"}
+ tr 1
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 111
+  ypos -31
+ }
+set N1798ba80 [stack 0]
+ Radial {
+  replace true
+  area {{curve} {curve} {input.width} {input.width*(1/(input.width/input.height))}}
+  softness {{parent.softness}}
+  plinear {{parent.Radial1_plinear}}
+  name Radial1
+  tile_color 0x34343400
+  xpos 294
+  ypos 26
+ }
+ Transform {
+  scale {{parent.scale i}}
+  center {{input.width/2 i} {input.height/2}}
+  name Transform1
+  tile_color 0xa378a800
+  xpos 294
+  ypos 65
+ }
+ Grade {
+  add -1
+  maskChannelInput rgba.red
+  invert_mask true
+  unpremult -rgba.alpha
+  name Grade1
+  xpos 294
+  ypos 99
+ }
+set N1827a500 [stack 0]
+ Invert {
+  channels rgba
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Invert1
+  xpos 294
+  ypos 172
+ }
+set N1827cd00 [stack 0]
+ Crop {
+  box {{curve-(input.width/7) i x35 0} {curve-(input.width/7) i x35 0} {input.width/2 i x35 720} {input.height/2 x35 405}}
+  softness 100
+  name Crop1
+  label BL
+  xpos 179
+  ypos 279
+ }
+push $N1827cd00
+ Crop {
+  box {{input.width/2 i x35 0} {curve-(input.width/7) i x35 0} {input.width+(input.width/7) i x35 720} {input.height/2 x35 405}}
+  softness 100
+  name Crop2
+  label BR
+  xpos 294
+  ypos 275
+ }
+push $N1827cd00
+ Crop {
+  box {{curve-(input.width/7) i x35 0} {input.height/2 i x35 0} {input.width/2 i x35 720} {input.height+(input.width/7) x35 405}}
+  softness 100
+  name Crop4
+  label TL
+  xpos 419
+  ypos 271
+ }
+push $N1827cd00
+ Crop {
+  box {{input.width/2 i x35 0} {input.height/2 i x35 0} {input.width+(input.width/7) i x35 720} {input.height+(input.width/7) i x35 405}}
+  softness 100
+  name Crop3
+  label TR
+  xpos 535
+  ypos 271
+ }
+push $N1827a500
+ Merge {
+  inputs 2
+  operation plus
+  bbox B
+  mix {{1-parent.tr}}
+  name Merge1
+  tile_color 0x7171c600
+  note_font_size 16
+  xpos 666
+  ypos 276
+ }
+ Merge {
+  inputs 2
+  operation plus
+  bbox B
+  mix {{1-parent.tl}}
+  name Merge2
+  tile_color 0x7171c600
+  note_font_size 16
+  xpos 668
+  ypos 348
+ }
+ Merge {
+  inputs 2
+  operation plus
+  bbox B
+  mix {{1-parent.br}}
+  name Merge3
+  tile_color 0x7171c600
+  note_font_size 16
+  xpos 680
+  ypos 420
+ }
+ Merge {
+  inputs 2
+  operation plus
+  bbox B
+  mix {{1-parent.bl}}
+  name Merge4
+  tile_color 0x7171c600
+  note_font_size 16
+  xpos 680
+  ypos 465
+ }
+ Clamp {
+  channels rgba
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Clamp1
+  xpos 680
+  ypos 510
+ }
+push $N1798ba80
+ Merge {
+  inputs 2
+  operation mult
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  bbox B
+  mix {{parent.amount}}
+  name Multiply5
+  tile_color 0x7171c600
+  xpos 111
+  ypos 550
+ }
+set N182a1700 [stack 0]
+ Output {
+  name Output1
+  xpos 93
+  ypos 602
+ }
+push $N1798ba80
+push $N182a1700
+ Viewer {
+  inputs 2
+  frame_range 0-141
+  fps 25
+  name Viewer1
+  xpos 179
+  ypos 317
+ }
+end_group
+Group {
+ name Glow_Exponential1
+ help "Exponential Glow node, with options to recolor and adjust falloff."
+ knobChanged "\nk = nuke.thisKnob()\nif k.name()=='crop':\n    if k.value():\n        nuke.thisNode().knob('overscan').setEnabled(True)\n    else:\n        nuke.thisNode().knob('overscan').setEnabled(False)\n"
+ tile_color 0xc97200ff
+ selected true
+ xpos 3441
+ ypos 2144
+ addUserKnob {20 ge l Glow}
+ addUserKnob {26 glow_ctrls l "@b;Glow:"}
+ addUserKnob {7 size t "Size of the glow" R 0 100}
+ size 22
+ addUserKnob {7 intensity t "Brightness of the Glow" R 0 10}
+ intensity 0.3
+ addUserKnob {7 falloff t "Adjust the light falloff of the glow. Higher values will have a longer falloff, resulting in visually bigger glows."}
+ falloff 0.75
+ addUserKnob {26 glow_highlights l "@b;Highlights:"}
+ addUserKnob {41 range t "Luma key to define which parts of the image will glow." T Keyer1.range}
+ addUserKnob {26 glow_colors l "@b;Glow Colors:"}
+ addUserKnob {7 saturation l "color from img" t "By default the glow takes on the colors of the plate. By using this knob you can desaturate the color of the glow."}
+ saturation 1
+ addUserKnob {18 core_color l "core re-color" t "Re-color the core of the glow. Use the core threshold to define which parts of the glow are core or falloff."}
+ core_color {1 1 1}
+ addUserKnob {6 core_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 falloff_color l "falloff re-color" t "Re-color the falloff of the glow. Use the core threshold to define which parts of the glow are core or falloff."}
+ falloff_color {1 1 1}
+ addUserKnob {6 falloff_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 threshold l "core threshold" t "Define which parts of the glow are core or falloff."}
+ threshold 1
+ addUserKnob {26 glow_options l "@b;Options:"}
+ addUserKnob {14 aspect l "aspect ratio" t "Set the aspect ratio for your glow. Streaky results can be obtained by changing the ratio here." R 0 100}
+ aspect {1 1}
+ addUserKnob {6 glow_only l "Glow only" t "By default the glow is added onto the plate. Checking this box will output the glow only. " +STARTLINE}
+ addUserKnob {6 crop l "Crop to Format" t "This glow can expand the bounding box to massive values, checking this box can prevent your bbox from getting unmanageable." +STARTLINE}
+ crop true
+ addUserKnob {7 overscan l "overscan (%)" t "If you are cropping to format but originally had some values outside the format, you can add some overscan here to preserve these. The values are a percentage of the format size." R 0 100}
+ overscan 10
+ addUserKnob {7 mix t "Mix back with the original plate (or black, if glow only is enabled)"}
+ mix 1
+ addUserKnob {26 ""}
+ addUserKnob {26 spin_copyright l "" t "© <b>SPIN<span style=\"color:#b32026\">VFX</span></b>\nGlow_Exponential\nVersion 1.0\n2017" +STARTLINE T "<span style=\"color:#aaa;font-family:sans-serif;font-size:8pt\"><b>SPIN<span style=\"color:#b32026\">VFX</span></b> - Version 1.0 - 2017 - <a href=\"https://github.com/SpinVFX/spin_nuke_gizmos/\" style=\"color:#aaa\">Github Page</a></span>"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 0
+  ypos -59
+ }
+ Dot {
+  name Dot1
+  tile_color 0xcccccc00
+  xpos 34
+  ypos 50
+ }
+set N15ec5000 [stack 0]
+ Dot {
+  name Dot24
+  tile_color 0xcccccc00
+  xpos 34
+  ypos 1274
+ }
+set N15ec5400 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  xpos 136
+  ypos 158
+  number 1
+ }
+push $N15ec5000
+ NoOp {
+  name CTRL
+  xpos 304
+  ypos 46
+  addUserKnob {20 User}
+  addUserKnob {7 falloff R 0 2}
+  falloff {{"max(parent.falloff/2+0.5, 0.0001)"}}
+  addUserKnob {7 falloff_intensity}
+  falloff_intensity {{falloff+pow(falloff,2)+pow(falloff,3)+pow(falloff,4)+pow(falloff,5)+pow(falloff,6)+pow(falloff,7)+pow(falloff,8)+pow(falloff,9)+pow(falloff,10)}}
+  addUserKnob {14 size R 0 100}
+  size {{parent.size/20*parent.aspect.w} {parent.size/20*parent.aspect.h}}
+  addUserKnob {7 intensity}
+  intensity {{parent.intensity/falloff_intensity}}
+  addUserKnob {7 core R 0 2}
+  core {{threshold}}
+  addUserKnob {7 core_length}
+  core_length {{sqrt(pow(core_color.r,2)+pow(core_color.g,2)+pow(core_color.b,2))/sqrt(3)}}
+  addUserKnob {7 falloff_length}
+  falloff_length {{sqrt(pow(falloff_color.r,2)+pow(falloff_color.g,2)+pow(falloff_color.b,2))/sqrt(3)}}
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  xpos 304
+  ypos 98
+ }
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge1
+  xpos 304
+  ypos 146
+  disable {{"!\[exists parent.input1] "}}
+ }
+ Premult {
+  name Premult1
+  xpos 304
+  ypos 202
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 304
+  ypos 228
+ }
+ Multiply {
+  value {{parent.CTRL.intensity}}
+  name Multiplyer
+  xpos 304
+  ypos 263
+ }
+ Saturation {
+  saturation {{parent.saturation}}
+  name Saturation1
+  xpos 304
+  ypos 325
+ }
+ Dot {
+  name Dot3
+  tile_color 0x7aa9ff00
+  xpos 338
+  ypos 372
+ }
+set N15ec5c00 [stack 0]
+ Dot {
+  name Dot2
+  tile_color 0x7aa9ff00
+  xpos 604
+  ypos 372
+ }
+set N15fd8000 [stack 0]
+ Dot {
+  name Dot4
+  tile_color 0x7aa9ff00
+  xpos 870
+  ypos 372
+ }
+set N15fd8400 [stack 0]
+ Dot {
+  name Dot5
+  tile_color 0x7aa9ff00
+  xpos 1136
+  ypos 372
+ }
+set N15fd8800 [stack 0]
+ Dot {
+  name Dot6
+  tile_color 0x7aa9ff00
+  xpos 1402
+  ypos 372
+ }
+set N15fd8c00 [stack 0]
+ Dot {
+  name Dot7
+  tile_color 0x7aa9ff00
+  xpos 1668
+  ypos 372
+ }
+set N15fd9000 [stack 0]
+ Dot {
+  name Dot8
+  tile_color 0x7aa9ff00
+  xpos 1934
+  ypos 372
+ }
+set N15fd9400 [stack 0]
+ Dot {
+  name Dot9
+  tile_color 0x7aa9ff00
+  xpos 2200
+  ypos 372
+ }
+set N15fd9800 [stack 0]
+ Dot {
+  name Dot10
+  tile_color 0x7aa9ff00
+  xpos 2466
+  ypos 372
+ }
+set N15fd9c00 [stack 0]
+ Dot {
+  name Dot11
+  tile_color 0x7aa9ff00
+  xpos 2732
+  ypos 372
+ }
+ Blur {
+  size {{Blur9.size*2} {Blur9.size*2}}
+  crop false
+  name Blur10
+  xpos 2698
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,10)}}
+  name Multiply10
+  xpos 2698
+  ypos 543
+ }
+ Dot {
+  name Dot20
+  tile_color 0x7aa9ff00
+  xpos 2732
+  ypos 796
+ }
+push $N15fd9c00
+ Blur {
+  size {{Blur8.size*2} {Blur8.size*2}}
+  crop false
+  name Blur9
+  xpos 2432
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,9)}}
+  name Multiply9
+  xpos 2432
+  ypos 542
+ }
+ Dot {
+  name Dot19
+  tile_color 0x7aa9ff00
+  xpos 2466
+  ypos 770
+ }
+push $N15fd9800
+ Blur {
+  size {{Blur7.size*2} {Blur7.size*2}}
+  crop false
+  name Blur8
+  xpos 2166
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,8)}}
+  name Multiply8
+  xpos 2166
+  ypos 536
+ }
+ Dot {
+  name Dot18
+  tile_color 0x7aa9ff00
+  xpos 2200
+  ypos 744
+ }
+push $N15fd9400
+ Blur {
+  size {{Blur6.size*2} {Blur6.size*2}}
+  crop false
+  name Blur7
+  xpos 1900
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,7)}}
+  name Multiply7
+  xpos 1900
+  ypos 528
+ }
+ Dot {
+  name Dot17
+  tile_color 0x7aa9ff00
+  xpos 1934
+  ypos 718
+ }
+push $N15fd9000
+ Blur {
+  size {{Blur5.size*2} {Blur5.size*2}}
+  crop false
+  name Blur6
+  xpos 1634
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,6)}}
+  name Multiply6
+  xpos 1634
+  ypos 528
+ }
+ Dot {
+  name Dot16
+  tile_color 0x7aa9ff00
+  xpos 1668
+  ypos 692
+ }
+push $N15fd8c00
+ Blur {
+  size {{Blur4.size*2} {Blur4.size*2}}
+  crop false
+  name Blur5
+  xpos 1368
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,5)}}
+  name Multiply5
+  xpos 1368
+  ypos 524
+ }
+ Dot {
+  name Dot15
+  tile_color 0x7aa9ff00
+  xpos 1402
+  ypos 666
+ }
+push $N15fd8800
+ Blur {
+  size {{Blur3.size*2} {Blur3.size*2}}
+  crop false
+  name Blur4
+  xpos 1102
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,4)}}
+  name Multiply4
+  xpos 1102
+  ypos 518
+ }
+ Dot {
+  name Dot14
+  tile_color 0x7aa9ff00
+  xpos 1136
+  ypos 640
+ }
+push $N15fd8400
+ Blur {
+  size {{Blur2.size*2} {Blur2.size*2}}
+  crop false
+  name Blur3
+  xpos 836
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,3)}}
+  name Multiply3
+  xpos 836
+  ypos 509
+ }
+ Dot {
+  name Dot13
+  tile_color 0x7aa9ff00
+  xpos 870
+  ypos 614
+ }
+push $N15fd8000
+ Blur {
+  size {{Blur1.size*2} {Blur1.size*2}}
+  crop false
+  name Blur2
+  xpos 570
+  ypos 440
+ }
+ Multiply {
+  value {{pow(CTRL.falloff,2)}}
+  name Multiply2
+  xpos 570
+  ypos 508
+ }
+ Dot {
+  name Dot12
+  tile_color 0x7aa9ff00
+  xpos 604
+  ypos 588
+ }
+push $N15ec5c00
+ Blur {
+  size {{CTRL.size*2} {CTRL.size*2}}
+  crop false
+  name Blur1
+  xpos 304
+  ypos 440
+ }
+ Multiply {
+  value {{CTRL.falloff}}
+  name Multiply1
+  xpos 304
+  ypos 512
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos 304
+  ypos 584
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge2
+  xpos 304
+  ypos 610
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos 304
+  ypos 636
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge4
+  xpos 304
+  ypos 662
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge5
+  xpos 304
+  ypos 688
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge6
+  xpos 304
+  ypos 714
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge7
+  xpos 304
+  ypos 740
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge8
+  xpos 304
+  ypos 766
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge9
+  xpos 304
+  ypos 792
+ }
+ Dot {
+  name Dot21
+  tile_color 0x4b5ec600
+  xpos 338
+  ypos 928
+ }
+set N1608e800 [stack 0]
+ Dot {
+  name Dot22
+  tile_color 0x4b5ec600
+  xpos 498
+  ypos 928
+ }
+ Grade {
+  whitepoint {{CTRL.core}}
+  white_clamp true
+  name Grade2
+  xpos 464
+  ypos 977
+ }
+ Gamma {
+  channels rgb
+  value {{parent.falloff_color.r/CTRL.falloff_length} {parent.falloff_color.g/CTRL.falloff_length} {parent.falloff_color.b/CTRL.falloff_length} {curve}}
+  name Gamma1
+  xpos 464
+  ypos 1037
+ }
+ Grade {
+  whitepoint {{CTRL.core}}
+  reverse true
+  name Grade3
+  xpos 464
+  ypos 1082
+ }
+push $N1608e800
+ Clamp {
+  minimum {{CTRL.core}}
+  maximum_enable false
+  name Clamp1
+  xpos 304
+  ypos 972
+ }
+ Grade {
+  add {{1-CTRL.core}}
+  name Grade4
+  xpos 304
+  ypos 1020
+ }
+ Gamma {
+  channels rgb
+  value {{1+(1-parent.core_color.r)/CTRL.core_length} {1+(1-parent.core_color.g)/CTRL.core_length} {1+(1-parent.core_color.b)/CTRL.core_length} {curve}}
+  name Gamma2
+  xpos 304
+  ypos 1061
+ }
+ Add {
+  channels rgb
+  value -1
+  name Add1
+  xpos 304
+  ypos 1087
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge10
+  xpos 304
+  ypos 1157
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove2
+  xpos 304
+  ypos 1183
+ }
+ Multiply {
+  value {{parent.mix}}
+  name mix
+  xpos 304
+  ypos 1217
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge11
+  xpos 304
+  ypos 1270
+  disable {{parent.glow_only}}
+ }
+ Dot {
+  name Dot23
+  tile_color 0x4b5ec600
+  xpos 338
+  ypos 1436
+ }
+push $N15ec5400
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  name Copy1
+  xpos 0
+  ypos 1414
+ }
+ Crop {
+  box {{-width*(parent.overscan/100)/2} {-height*(parent.overscan/100)/2} {width+(width*(parent.overscan/100)/2)} {height+(height*(parent.overscan/100)/2)}}
+  crop false
+  name Crop2
+  xpos 0
+  ypos 1495
+  disable {{!parent.crop}}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 1543
+ }
+end_group
+Group {
+ name AM_Promist1
+ tile_color 0xe2ff00ff
+ selected true
+ xpos 3441
+ ypos 2228
+ addUserKnob {20 User}
+ addUserKnob {41 value l INVISIBLE +INVISIBLE T thin.value}
+ addUserKnob {7 Thin l ThinBlur R 0 2}
+ Thin 1.01
+ addUserKnob {41 value_1 l INVISIBLE +INVISIBLE T mid.value}
+ addUserKnob {7 Mid l MidBlur R 0 2}
+ Mid 1
+ addUserKnob {41 value_2 l INVISIBLE +INVISIBLE T wide.value}
+ addUserKnob {7 Wide l WideBlur R 0 2}
+ Wide 1
+ addUserKnob {41 value_3 l INVISIBLE +INVISIBLE T fat.value}
+ addUserKnob {7 Fat l FatBlur R 0 2}
+ Fat 1
+ addUserKnob {26 ""}
+ addUserKnob {41 which l Dissolve T Dissolve2.which}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode21
+  tile_color 0x8e8e3800
+  label "Pro-Mist (Lin)"
+  note_font_size 42
+  xpos 195
+  ypos 244
+  bdwidth 620
+  bdheight 653
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 383
+  ypos 284
+ }
+ Dot {
+  name Dot74
+  xpos 417
+  ypos 324
+ }
+set N1608f800 [stack 0]
+ Expression {
+  expr0 r*r
+  expr1 g*g
+  expr2 b*b
+  name Expression4
+  xpos 383
+  ypos 375
+ }
+ Clamp {
+  maximum 20
+  name Clamp2
+  xpos 383
+  ypos 428
+ }
+set N16161900 [stack 0]
+ Blur {
+  size 4
+  quality 25
+  crop false
+  name Blur14
+  xpos 383
+  ypos 497
+ }
+ Multiply {
+  value {{parent.Thin}}
+  name thin
+  xpos 383
+  ypos 537
+ }
+push $N16161900
+ Dot {
+  name Dot75
+  xpos 538
+  ypos 436
+ }
+set N1608fc00 [stack 0]
+ Blur {
+  size 20
+  quality 50
+  name Blur15
+  xpos 504
+  ypos 498
+ }
+ Multiply {
+  value {{parent.Mid}}
+  name mid
+  xpos 504
+  ypos 537
+ }
+ Dot {
+  name Dot76
+  xpos 538
+  ypos 599
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge11
+  xpos 383
+  ypos 596
+ }
+push $N1608fc00
+ Dot {
+  name Dot77
+  xpos 645
+  ypos 436
+ }
+set N161d0400 [stack 0]
+ Blur {
+  size 66
+  quality 100
+  name Blur16
+  xpos 611
+  ypos 501
+ }
+ Multiply {
+  value {{parent.Wide}}
+  name wide
+  xpos 611
+  ypos 540
+ }
+ Dot {
+  name Dot78
+  xpos 645
+  ypos 623
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge12
+  xpos 383
+  ypos 620
+ }
+push $N161d0400
+ Dot {
+  name Dot79
+  xpos 759
+  ypos 436
+ }
+ Blur {
+  size 111
+  quality 100
+  name Blur17
+  xpos 725
+  ypos 497
+ }
+ Multiply {
+  value {{parent.Fat}}
+  name fat
+  xpos 725
+  ypos 538
+ }
+ Dot {
+  name Dot80
+  xpos 759
+  ypos 647
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge15
+  xpos 383
+  ypos 644
+ }
+ Expression {
+  expr0 r/(thin.value+mid.value+wide.value+fat.value)
+  expr1 g/(thin.value+mid.value+wide.value+fat.value)
+  expr2 b/(thin.value+mid.value+wide.value+fat.value)
+  name Expression5
+  xpos 383
+  ypos 760
+ }
+set N16212500 [stack 0]
+ Expression {
+  expr0 sqrt(r)
+  expr1 sqrt(g)
+  expr2 sqrt(b)
+  name Expression6
+  xpos 383
+  ypos 796
+ }
+push $N1608f800
+ Dot {
+  name Dot81
+  xpos 205
+  ypos 324
+ }
+ Dot {
+  name Dot82
+  xpos 205
+  ypos 867
+ }
+ Dissolve {
+  inputs 2
+  which 0.065
+  name Dissolve2
+  xpos 383
+  ypos 859
+ }
+ Output {
+  name Output1
+  xpos 383
+  ypos 959
+ }
+push $N16212500
+ Viewer {
+  name Viewer1
+  xpos 383
+  ypos 824
+ }
+end_group
+Group {
+ name Grain_CB1
+ tile_color 0x930bffff
+ gl_color 0xff
+ label "Kodak 5218"
+ selected true
+ xpos 3441
+ ypos 3920
+ addUserKnob {20 Grain_CB}
+ addUserKnob {3 seed t "Change this value to make different instances of this operator produce different noise"}
+ seed 134
+ addUserKnob {35 presets -STARTLINE M {"presets/Kodak 5248" "knobs this \{gangSeed 0 rsize 3.30 gsize 2.90 bsize 2.5 redIr 0.60 greenIr 0.60 blueIr 0.60 redT 0.42 greenT 0.46 blueT 0.85 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5248\}\}" "presets/Kodak 5279" "knobs this \{gangSeed 0 rsize 2.70 gsize 2.60 bsize 2.40 redIr 1.00 greenIr 0.76 blueIr 0.65 redT 0.37 greenT 0.60 blueT 1.65 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5279\}\}" "presets/Kodak FX214" "knobs this \{gangSeed 0 rsize 1.87 gsize 2.60 bsize 2.44 redIr 1 greenIr 0.76 blueIr 0.79 redT 0.41 greenT 0.60 blueT 1.80 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak FX214\}\}" "presets/Kodak GT5274" "knobs this \{gangSeed 0 rsize 0.04 gsize 0.10 bsize 0.90 redIr 0.90 greenIr 0.76 blueIr 0.81 redT 0.49 greenT 0.50 blueT 1.55 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak GT5274\}\}" "presets/Kodak 5217" "knobs this \{gangSeed 0 rsize 0.23 gsize 1.20 bsize 1.40 redIr 0.60 greenIr 0.86 blueIr 0.60 redT 0.48 greenT 0.42 blueT 0.87 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5217\}\}" "presets/Kodak 5218" "knobs this \{gangSeed 0 rsize 0.10 gsize 1.60 bsize 1.91 redIr 0.60 greenIr 0.86 blueIr 0.73 redT 0.38 greenT 0.17 blueT 0.87 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5218\}\}" "presets/Kodak 5219" "knobs this \{gangSeed 0 rsize 1.6 gsize 1.8 bsize 2.5 redIr 0.6 greenIr 0.6 blueIr 0.6 redT 0.5 greenT 0.51 blueT 0.95 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5219\}\}" "presets/Kodak 5201" "knobs this \{gangSeed 0 rsize 0.10 gsize 1 bsize 1 redIr 0.60 greenIr 0.86 blueIr 0.73 redT 0.2 greenT 0.24 blueT 0.47 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Kodak 5201\}\}" "presets/Digital Noise" "knobs this \{gangSeed 1 rsize 1.7 gsize 1.7 bsize 1.7 redIr 0.30 greenIr 0.30 blueIr 0.30 redT 0.15 greenT 0.15 blueT 0.15 redSoft 0.5 greenSoft 0.5 blueSoft 0.5 label \{Digital Noise\}\}"}}
+ addUserKnob {26 version l "                     - " -STARTLINE T "by Chad Buehler           \nv1.4     "}
+ addUserKnob {32 bugs l " comments / bugs " t "click here to download the latest version, leave a comment/request or a bug." -STARTLINE T "start http://www.nukepedia.com/search/chad-buehler/"}
+ addUserKnob {6 gangSeed l "gang seed" t "gangs the seed for Red, Green and Blue, so they're identical." +STARTLINE}
+ addUserKnob {26 "" l "@b;Size"}
+ addUserKnob {6 anamorphic t "Doubles the width grain size" +STARTLINE}
+ addUserKnob {14 rsize l red R 0 100}
+ rsize 0.1
+ addUserKnob {14 gsize l green R 0 100}
+ gsize 1.6
+ addUserKnob {14 bsize l blue R 0 100}
+ bsize 1.91
+ addUserKnob {26 "" l "@b;Irregularity"}
+ addUserKnob {7 redIr l red}
+ redIr 0.6
+ addUserKnob {7 greenIr l green}
+ greenIr 0.86
+ addUserKnob {7 blueIr l blue}
+ blueIr 0.73
+ addUserKnob {26 "" l "@b;Intensity"}
+ addUserKnob {7 redT l red t "Amount of grain to add to a white pixel"}
+ redT 0.38
+ addUserKnob {7 greenT l green t "Amount of grain to add to a white pixel"}
+ greenT 0.17
+ addUserKnob {7 blueT l blue t "Amount of grain to add to a white pixel"}
+ blueT 0.87
+ addUserKnob {26 "" l "@b;Soften"}
+ addUserKnob {7 redSoft l red t "Fine adjustments"}
+ redSoft 0.5
+ addUserKnob {7 greenSoft l green t "Fine adjustments"}
+ greenSoft 0.5
+ addUserKnob {7 blueSoft l blue t "Fine adjustments"}
+ blueSoft 0.5
+ addUserKnob {26 blurorsharpen l "@b;Blur or Sharpen"}
+ addUserKnob {7 bsRGB l RGB t "blurs or sharpens the grain for Red, Green and Blue" R -1 1}
+ addUserKnob {20 RangeGroup l "@b;Range (Film Response)" t "Allows you to set a range, based on the image values, where grain will and won't appear.  A value of 1 is full grain and 0 is no grain." n 1}
+ addUserKnob {6 userange l "Use Range" t "This toggles range on/off" +STARTLINE}
+ addUserKnob {6 LUM l Luminance t "Uses Luminance, instead of the individual RGB values to drive the key." -STARTLINE}
+ LUM true
+ addUserKnob {6 preview t "Allows you to see what the range looks like.  For preview purposes only.  Disable to use grain." -STARTLINE}
+ addUserKnob {26 psets2 l presets}
+ addUserKnob {41 setP2 l "Master Only" t "Preset for using the Master LUT only" T ColorLookup1.setP2}
+ addUserKnob {41 setP1_1 l "RGB Separately" t "preset for using R, G & B separately" -STARTLINE T ColorLookup1.setP1}
+ addUserKnob {26 ""}
+ addUserKnob {41 lut_1 l "" -STARTLINE T ColorLookup1.lut}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 "" l "@b;Mask"}
+ addUserKnob {4 gSelection l mask t "Select whether you want want the grain driven by the B input or Mask Input.  If you want grain everywhere, uncheck the mask checkbox." M {"Obey Alpha" "Use Mask Input" "" "" ""}}
+ addUserKnob {41 maskChannelMask l "" +STARTLINE T Copy1.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Copy1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Copy1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Copy1.fringe}
+ addUserKnob {26 "" l "@b;Mask Falloff"}
+ addUserKnob {7 Igrain l "Increase Grain" t "Increasing this value brings in more grain on the less dense areas of the mask."}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Copy1.mix}
+ addUserKnob {20 BlackNoiseBoost l "Black Noise Boost"}
+ addUserKnob {6 Useboost l "Use Boost" t "Boost the brightness of the grain in the low end." +STARTLINE}
+ addUserKnob {6 prevKey l "Preview Key" t "Allows you to see what the range looks like.  For preview purposes only.  Disable to use grain." -STARTLINE}
+ addUserKnob {26 psets3 l presets}
+ addUserKnob {41 setP2_1 l "Master Only" t "Preset for using the Master LUT only" T ColorLookup2.setP2}
+ addUserKnob {41 setP1 l "RGB Separately" t "preset for using R, G & B separately" -STARTLINE T ColorLookup2.setP1}
+ addUserKnob {26 "" l "@b;Key"}
+ addUserKnob {41 lut l "" +STARTLINE T ColorLookup2.lut}
+ addUserKnob {26 ccGrain l "@b;CC grain"}
+ addUserKnob {18 times l multiply R 0 20}
+ times {2 3 5}
+ addUserKnob {6 times_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 times_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 GrOff l offset R -1 1}
+ GrOff {0 0 0}
+ addUserKnob {6 GrOff_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 GrOff_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 bgrain l "@b;Bright specs"}
+ addUserKnob {6 UseSpecs l "Add specs to Boost" t "Use Boost must be on.  This adds the bright specs to the blue channel.  If you only want to use this - make sure the CC grain multiply is set to 1 and the offset is 0." +STARTLINE}
+ addUserKnob {7 bspecs l blue t "Use Boost must be on.  This adds the bright little specs on on the blue channel." R 1 3}
+ bspecs 2
+ addUserKnob {20 LensDistortion l "Lens Distortion"}
+ addUserKnob {6 UseSTMapDistortion l " Use STMap Distortion" t "UV style Distortion\nWhen you have to work on undistorted footage" +STARTLINE}
+ addUserKnob {41 uv l "UV channels" T STMap1.uv}
+ addUserKnob {41 blur l "blur channel" T STMap1.blur}
+ addUserKnob {41 blur_scale l "blur scale" T STMap1.blur_scale}
+ addUserKnob {41 maskChannel l "mask channel" T STMap1.maskChannel}
+ addUserKnob {41 invert_mask_1 l invert -STARTLINE T STMap1.invert_mask}
+ addUserKnob {41 premultiplied -STARTLINE T STMap1.premultiplied}
+ addUserKnob {41 filter T STMap1.filter}
+}
+ Input {
+  inputs 0
+  name B
+  xpos 569
+  ypos -37
+ }
+ Dot {
+  name Dot4
+  xpos 603
+  ypos 21
+ }
+set N182e0400 [stack 0]
+ Invert {
+  channels rgb
+  maskChannelMask -rgba.alpha
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Invert1
+  xpos 905
+  ypos 55
+  disable {{!parent.Useboost.main i}}
+ }
+ ColorLookup {
+  name ColorLookup2
+  xpos 905
+  ypos 202
+  disable {{!parent.Useboost.main i}}
+  addUserKnob {20 User}
+  addUserKnob {22 scanP1 l INVISIBLE +INVISIBLE T "x=nuke.selectedNode()\ncode=x\['lut'].toScript()\n\ny=nuke.thisNode()\ny\['storePresetValue1'].fromScript(code)" +STARTLINE}
+  addUserKnob {22 scanP2 l INVISIBLE +INVISIBLE T "x=nuke.selectedNode()\ncode=x\['lut'].toScript()\n\ny=nuke.thisNode()\ny\['storePresetValue2'].fromScript(code)" +STARTLINE}
+  addUserKnob {22 setP1 l "RGB Separately" T "y=nuke.thisNode()\ncode=y\['storePresetValue1'].toScript()\ny\['lut'].fromScript(code)\n" +STARTLINE}
+  addUserKnob {22 setP2 l "Master Only" -STARTLINE T "y=nuke.thisNode()\ncode=y\['storePresetValue2'].toScript()\ny\['lut'].fromScript(code)"}
+  addUserKnob {22 reset -STARTLINE T "x=nuke.thisNode()\n\ncode='master \{\}\\nred \{\}\\ngreen \{\}\\nblue \{\}\\nalpha \{\}'\n\nx\['lut'].fromScript(code)"}
+  addUserKnob {52 storePresetValue1 +STARTLINE}
+  addUserKnob {52 storePresetValue2 +STARTLINE}
+ }
+set N1834c500 [stack 0]
+push $N182e0400
+ Saturation {
+  saturation 0
+  maskChannelMask -rgba.alpha
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Saturation
+  xpos 806
+  ypos 82
+  disable {{!parent.LUM.main i}}
+ }
+ ColorLookup {
+  lut {master {curve C 0.8283581734 0.3248756528}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup1
+  xpos 806
+  ypos 324
+  disable {{!parent.userange i}}
+  addUserKnob {20 User}
+  addUserKnob {22 scanP1 l INVISIBLE +INVISIBLE T "x=nuke.selectedNode()\ncode=x\['lut'].toScript()\n\ny=nuke.thisNode()\ny\['storePresetValue1'].fromScript(code)" +STARTLINE}
+  addUserKnob {22 scanP2 l INVISIBLE +INVISIBLE T "x=nuke.selectedNode()\ncode=x\['lut'].toScript()\n\ny=nuke.thisNode()\ny\['storePresetValue2'].fromScript(code)" +STARTLINE}
+  addUserKnob {22 setP1 l "RGB Separately" T "y=nuke.thisNode()\ncode=y\['storePresetValue1'].toScript()\ny\['lut'].fromScript(code)\n" +STARTLINE}
+  addUserKnob {22 setP2 l "Master Only" -STARTLINE T "y=nuke.thisNode()\ncode=y\['storePresetValue2'].toScript()\ny\['lut'].fromScript(code)"}
+  addUserKnob {22 reset -STARTLINE T "x=nuke.thisNode()\n\ncode='master \{\}\\nred \{\}\\ngreen \{\}\\nblue \{\}\\nalpha \{\}'\n\nx\['lut'].fromScript(code)"}
+  addUserKnob {52 storePresetValue1 +STARTLINE}
+  addUserKnob {52 storePresetValue2 +STARTLINE}
+ }
+set N1834d900 [stack 0]
+ Input {
+  inputs 0
+  name Mask
+  xpos 449
+  ypos -36
+  number 1
+ }
+push $N182e0400
+ Switch {
+  inputs 2
+  which {{gSelection i}}
+  name Switch2
+  xpos 449
+  ypos 110
+ }
+ CCorrect {
+  channels alpha
+  gray 1
+  contrast {{1-parent.Igrain i}}
+  shadows 0
+  midtones 0
+  highlights 0
+  name CCorrect2
+  xpos 449
+  ypos 512
+  disable {{parent.Igrain==0||parent.Igrain<0?1:0 i}}
+ }
+ Dot {
+  name Dot3
+  xpos 483
+  ypos 640
+ }
+push $N1834d900
+push $N1834c500
+push $N1834c500
+push $N1834c500
+push $N1834c500
+push $N182e0400
+push $N182e0400
+ Expression {
+  temp_name0 OE
+  temp_expr0 ceil(frame/2)-floor(frame/2)==1?frame:-3.23*frame
+  expr0 (clamp(fBm(-OE+(x*1/rsize.w),OE+(y*1/rsize.h),frame+seed+redIr/2,2,2,softenRGB.x)*0.5+0.5))*2-1
+  expr1 (clamp(fBm(-OE+(x*1/gsize.w),OE+(y*1/gsize.h),frame+gSeed*seed+greenIr/2,2,2,softenRGB.y)*0.5+0.5))*2-1
+  expr2 (clamp(fBm(-OE+(x*1/bsize.w),OE+(y*1/bsize.h),frame+bSeed*seed+blueIr/2,2,2,softenRGB.z)*0.5+0.5))*2-1
+  name ExpressionGrain2
+  xpos 671
+  ypos 81
+  addUserKnob {20 User}
+  addUserKnob {3 seed}
+  seed {{parent.seed i}}
+  addUserKnob {26 "" l "@b;Size"}
+  addUserKnob {6 anamorphic +STARTLINE}
+  anamorphic {{parent.anamorphic i}}
+  addUserKnob {14 rsize l red R 0 100}
+  rsize {{parent.anamorphic<1?parent.rsize:parent.rsize*2 i} {parent.rsize i}}
+  addUserKnob {14 gsize l green R 0 100}
+  gsize {{parent.anamorphic<1?parent.gsize:parent.gsize*2 i} {parent.gsize i}}
+  addUserKnob {14 bsize l blue R 0 100}
+  bsize {{parent.anamorphic<1?parent.bsize:parent.bsize*2 i} {parent.bsize i}}
+  addUserKnob {26 "" l "@b;Irregularity"}
+  addUserKnob {7 redIr l red}
+  redIr {{parent.redIr i}}
+  addUserKnob {7 greenIr l green}
+  greenIr {{parent.greenIr i}}
+  addUserKnob {7 blueIr l blue}
+  blueIr {{parent.blueIr i}}
+  addUserKnob {26 "" l "Blur / Sharpen"}
+  addUserKnob {13 softenRGB}
+  softenRGB {{-parent.redSoft+1 i} {-parent.greenSoft+1 i} {-parent.blueSoft+1 i}}
+  addUserKnob {7 gSeed}
+  gSeed {{parent.gangSeed==1?1:2 i}}
+  addUserKnob {7 bSeed}
+  bSeed {{parent.gangSeed==1?1:3 i}}
+ }
+ STMap {
+  inputs 2
+  channels rgb
+  name STMap1
+  xpos 671
+  ypos 154
+  disable {{!parent.UseSTMapDistortion.main i}}
+ }
+set N1837ea00 [stack 0]
+ ColorCorrect {
+  inputs 1+1
+  channels {-rgba.red -rgba.green rgba.blue none}
+  contrast {{parent.bspecs i}}
+  shadows 0
+  midtones 0
+  highlights 0
+  maskChannelMask rgba.blue
+  name ColorCorrect1
+  xpos 724
+  ypos 195
+  disable {{"!parent.Useboost.main > 0 || !parent.UseSpecs.main > 0 ? 1 :0" i}}
+ }
+push $N1837ea00
+ Merge2 {
+  inputs 2
+  operation max
+  bbox B
+  name Merge5
+  xpos 671
+  ypos 242
+  disable {{"!parent.Useboost.main > 0 || !parent.UseSpecs.main > 0 ? 1 :0" i}}
+ }
+ Grade {
+  inputs 1+1
+  channels {rgba.red -rgba.green -rgba.blue none}
+  multiply {{parent.times.main.r i}}
+  add {{parent.GrOff.main.r i}}
+  black_clamp false
+  maskChannelMask rgba.red
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade2
+  xpos 671
+  ypos 278
+  disable {{!parent.Useboost.main i}}
+ }
+ Grade {
+  inputs 1+1
+  channels {-rgba.red rgba.green -rgba.blue none}
+  multiply {{parent.times.main.g i}}
+  add {{parent.GrOff.main.g i}}
+  black_clamp false
+  maskChannelMask rgba.green
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade3
+  xpos 671
+  ypos 322
+  disable {{!parent.Useboost.main i}}
+ }
+ Grade {
+  inputs 1+1
+  channels {-rgba.red -rgba.green rgba.blue none}
+  multiply {{parent.times.main.b i}}
+  add {{parent.GrOff.main.b i}}
+  black_clamp false
+  maskChannelMask rgba.blue
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Grade4
+  xpos 671
+  ypos 366
+  disable {{!parent.Useboost.main i}}
+ }
+ MergeExpression {
+  inputs 2
+  expr0 (HL>0?1:Ar)*Br
+  expr1 (HL>0?1:Ag)*Bg
+  expr2 (HL>0?1:Ab)*Bb
+  name MergeExpressionMask2
+  xpos 715
+  ypos 442
+  addUserKnob {20 User l INVISIBLE +INVISIBLE}
+  addUserKnob {6 HL l INVISIBLE +INVISIBLE +STARTLINE}
+  HL {{!parent.userange i}}
+ }
+ Sharpen {
+  channels rgb
+  amount {{parent.bsRGB i}}
+  name Sharpen3
+  xpos 715
+  ypos 485
+  disable {{parent.bsRGB==0||parent.bsRGB<0?1:0 i}}
+ }
+ Blur {
+  channels rgb
+  size {{-parent.bsRGB i}}
+  name Blur4
+  xpos 715
+  ypos 519
+  disable {{parent.bsRGB==0||parent.bsRGB>0?1:0 i}}
+ }
+push $N182e0400
+ MergeExpression {
+  inputs 2
+  expr0 max(0,Br+Ar*(Br*redT))
+  expr1 max(0,Bg+Ag*(Bg*greenT))
+  expr2 max(0,Bb+Ab*(Bb*blueT))
+  name MergeExpression2
+  xpos 627
+  ypos 565
+  addUserKnob {20 User}
+  addUserKnob {26 "" l "@b;Intensity"}
+  addUserKnob {7 redT l red}
+  redT {{parent.redT i}}
+  addUserKnob {7 greenT l green}
+  greenT {{parent.greenT i}}
+  addUserKnob {7 blueT l blue}
+  blueT {{parent.blueT i}}
+ }
+push $N182e0400
+ Copy {
+  inputs 2+1
+  channels rgb
+  maskChannelMask none
+  maskChannelInput -mask.a
+  mix 0.375
+  name Copy1
+  xpos 569
+  ypos 623
+ }
+ Switch {
+  inputs 3
+  which {{parent.prevKey>0?2:parent.preview i}}
+  name Switch1
+  xpos 792
+  ypos 710
+  disable {{"!\$gui" i}}
+ }
+ Output {
+  name Output1
+  xpos 792
+  ypos 766
+ }
+end_group
+Dot {
+ name Dot2
+ selected true
+ xpos 3475
+ ypos 4862
+}

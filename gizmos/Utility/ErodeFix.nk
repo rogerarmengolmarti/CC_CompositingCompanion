@@ -4,7 +4,7 @@ push $cut_paste_input
 add_layer {BrshDistribution BrshDistribution.red BrshDistribution.green BrshDistribution.blue BrshDistribution.alpha}
 Group {
  name ErodeFix1
- tile_color 0x238c66ff
+ tile_color 0x29a580ff
  selected true
  xpos -707
  ypos 7714
