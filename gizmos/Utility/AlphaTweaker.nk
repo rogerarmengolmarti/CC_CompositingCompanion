@@ -1,15 +1,16 @@
 set cut_paste_input [stack 0]
-version 15.1 v2
+version 15.2 v9
 push $cut_paste_input
 Group {
  name AlphaTweaker1
  tile_color 0x29a580ff
  selected true
- xpos -14775
- ypos -2055
+ xpos 6921
+ ypos 7005
+ disable_group_view true
  addUserKnob {20 properties l Properties}
  addUserKnob {4 generateAlpha l "Alpha From" t "Generate alpha from\nRed\nGreen\nBlue\nR+G+B Median" M {None Red Green Blue Median}}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {7 alphaExpand l "Alpha Clean" t "Use positive values to eliminate unwanted artefacts" R -5 5}
  addUserKnob {6 precisionMode l "Precision Mode" +STARTLINE}
  addUserKnob {6 multiplyOnOff l Multiply t "Multiply by the original Alpha" +STARTLINE}
@@ -61,11 +62,12 @@ Group {
  addUserKnob {41 highlights.offset l offset T ColorCorrect1.highlights.offset}
  addUserKnob {41 highlights.offset_panelDropped l "panel dropped state" -STARTLINE +HIDDEN T ColorCorrect1.highlights.offset_panelDropped}
  addUserKnob {20 "" n -1}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">Alpha Tweaker</font><font size=\"3\"> v1.0 - by Roger Armengol Martí</font>"}
 }
  Input {
   inputs 0
+  name Input1
   xpos -619
   ypos 374
  }
@@ -102,13 +104,13 @@ Group {
   xpos -585
   ypos 1017
  }
-set N3bb0c000 [stack 0]
+set N436f7000 [stack 0]
  Dot {
   name Dot3
   xpos -790
   ypos 1017
  }
-set N3bb0c400 [stack 0]
+set N4761e000 [stack 0]
  Dot {
   name Dot4
   xpos -1023
@@ -119,7 +121,7 @@ set N3bb0c400 [stack 0]
   xpos -1023
   ypos 1400
  }
-push $N3bb0c000
+push $N436f7000
  FilterErode {
   size {{parent.Dilate1.size}}
   name FilterErode1
@@ -132,7 +134,7 @@ push $N3bb0c000
   xpos -619
   ypos 1207
  }
-push $N3bb0c400
+push $N4761e000
  Dilate {
   channels alpha
   size {{-1*(parent.alphaExpand)}}
