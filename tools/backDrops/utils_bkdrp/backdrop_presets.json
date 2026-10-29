@@ -53,6 +53,15 @@
             "center": false,
             "bookmark": true,
             "size": 25
+        },
+        {
+            "name": "LG-Lights",
+            "color": "#304168",
+            "bold": true,
+            "italics": false,
+            "center": true,
+            "bookmark": true,
+            "size": 75
         }
     ]
 }

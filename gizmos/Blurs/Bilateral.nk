@@ -3,34 +3,34 @@ version 15.2 v6
 push $cut_paste_input
 add_layer {BrshDistribution BrshDistribution.red BrshDistribution.green BrshDistribution.blue BrshDistribution.alpha}
 Group {
- name Bilateral_1
+ name Bilateral1
  tile_color 0x29a580ff
  selected true
- xpos 699
- ypos 8227
+ xpos -1113
+ ypos 18687
  disable_group_view true
  addUserKnob {20 Settings l Setttings}
  addUserKnob {26 scaling_TXT l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nBilateral\n"}
- addUserKnob {41 size l "Blur Size" t "Amount of blur applied to the brush" T Bilateral5.size}
- addUserKnob {41 positionalSigma l "Brush Detect" t "Higher values help detect brushes, makes them harder.\n\nRecomended Value: 8" T Bilateral5.positionalSigma}
- addUserKnob {41 colorSigma l Soften t "Lower values harden the brushes, higher values make them softer and less defined.\n\nRecomended value: 0.1" T Bilateral5.colorSigma}
- addUserKnob {41 filter l Filter T Bilateral5.filter}
+ addUserKnob {7 blur l Blur t "Higher values increase the canvas distance the filter searches for pixels to average together, dictating the maximum possible size of your blur." R 0 50}
+ blur 25
+ addUserKnob {7 distanceLimit l "Distance Limit" t "Lower values prioritize pixels immediately next to the center, keeping the blur tight and localized. Higher values allow pixels further away to have equal blending weight, creating a much broader, smoother, and more generalized blur across the image." R 0 80}
+ distanceLimit 40
+ addUserKnob {7 tolerance l Tolerance t "Lower values act as a strict edge-lock, preventing pixels of different colors or brightness levels from blending. High values bypass edge detection entirely, causing the filter to wash across color boundaries like a standard Gaussian blur"}
+ tolerance 0.25
+ addUserKnob {41 filter l Filter T Bilateral_INTERNAL.filter}
  addUserKnob {26 ""}
- addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">Bilateral</font><font size=\"3\"> v1.0.0 - by Roger Armengol Martí</font>"}
- addUserKnob {20 io l IO}
+ addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">Bilateral</font><font size=\"3\"> v1.0.1 - by Roger Armengol Martí</font>"}
+ addUserKnob {20 Input}
  addUserKnob {26 scaling_TXT_1 l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nInput"}
- addUserKnob {41 channels l Channels T Bilateral5.channels}
- addUserKnob {41 guide l "Guide Channels" T Bilateral5.guide}
+ addUserKnob {41 channels l Channels T Bilateral_INTERNAL.channels}
+ addUserKnob {41 guide l "Guide Channels" T Bilateral_INTERNAL.guide}
  addUserKnob {26 "" l Mask T ""}
- addUserKnob {41 maskChannelMask l "" -STARTLINE T Bilateral5.maskChannelMask}
- addUserKnob {41 invertMask l Invert -STARTLINE T Bilateral5.invertMask}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Bilateral_INTERNAL.maskChannelMask}
+ addUserKnob {41 invertMask l Invert -STARTLINE T Bilateral_INTERNAL.invertMask}
  addUserKnob {26 ""}
- addUserKnob {26 scaling_TXT_2 l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nOutput"}
- addUserKnob {41 mix l Mix T Bilateral5.mix}
 }
  Input {
   inputs 0
-  name Input1
   xpos 508
   ypos 281
  }
@@ -39,39 +39,42 @@ Group {
   xpos 542
   ypos 350
  }
-set Nb0a86000 [stack 0]
+set N3467d400 [stack 0]
  Dot {
   name Dot2
-  xpos 662
+  xpos 671
+  ypos 350
+ }
+ Dot {
+  name Dot5
+  xpos 671
   ypos 447
  }
-push $Nb0a86000
+push $N3467d400
+ Dot {
+  name Dot4
+  xpos 432
+  ypos 350
+ }
  Dot {
   name Dot3
   xpos 431
   ypos 447
  }
-push $Nb0a86000
+push $N3467d400
  Bilateral2 {
   inputs 3
   channels rgb
   guide BrshDistribution
-  size 11.4
-  positionalSigma 7.6
-  colorSigma 0.1
+  size {{parent.blur}}
+  positionalSigma {{parent.distanceLimit}}
+  colorSigma {{parent.tolerance}}
   maskChannelMask none
-  name Bilateral5
+  name Bilateral_INTERNAL
   xpos 508
   ypos 444
  }
- set Cac64f700 [stack 0]
-set Nac64f700 [stack 0]
- Output {
-  name Output1
-  xpos 508
-  ypos 544
- }
-push $Nac64f700
+set N9768b700 [stack 0]
 push 0
  Viewer {
   inputs 2
@@ -84,5 +87,10 @@ push 0
   xpos 620
   ypos -9
   hide_input true
+ }
+push $N9768b700
+ Output {
+  xpos 508
+  ypos 544
  }
 end_group
