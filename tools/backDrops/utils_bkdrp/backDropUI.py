@@ -4,9 +4,9 @@
 
 import os
 import sys
+import math
 import platform
 import json
-#from backDropFunctions import randomColor
 
 sys.dont_write_bytecode = True  # Avoid writing .pyc files
 
@@ -27,8 +27,6 @@ PRESETS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'backdro
 PRESET_COLUMNS = 3  # buttons per row in the preset grid
 
 
-
-
 # ---------------------------------------------------------------------------
 # Functions
 # ---------------------------------------------------------------------------
@@ -39,10 +37,48 @@ def randomColor():
     h = random.random()
     s = random.uniform(0.25, 0.65)
     l = random.uniform(0.25, 0.35)
-    
+
     # HLS to RGB
     r, g, b = colorsys.hls_to_rgb(h, l, s)
     return '#{:02x}{:02x}{:02x}'.format(int(r*255), int(g*255), int(b*255))
+
+def _refresh_icon(size=32, color="#dddddd"):
+    """Draw a 'two rotating arrows' icon (refresh / random) as a QIcon."""
+    pm = QtGui.QPixmap(size, size)
+    pm.fill(QtCore.Qt.transparent)
+
+    p = QtGui.QPainter(pm)
+    p.setRenderHint(QtGui.QPainter.Antialiasing)
+
+    pen = QtGui.QPen(QtGui.QColor(color))
+    pen.setWidthF(size * 0.09)
+    pen.setCapStyle(QtCore.Qt.RoundCap)
+    p.setPen(pen)
+
+    margin = size * 0.2
+    rect = QtCore.QRectF(margin, margin, size - 2 * margin, size - 2 * margin)
+    cx, cy = rect.center().x(), rect.center().y()
+    radius = rect.width() / 2.0
+    head = size * 0.2
+
+    span = 140
+    for start in (20, 200):  # two arcs, opposite sides
+        p.drawArc(rect, int(start * 16), int(span * 16))
+
+        # Arrowhead at the end of the arc (counter-clockwise direction)
+        a = math.radians(start + span)
+        tip = QtCore.QPointF(cx + radius * math.cos(a), cy - radius * math.sin(a))
+        dx, dy = -math.sin(a), -math.cos(a)  # tangent direction in screen coords
+
+        for off in (35, -35):
+            o = math.radians(off)
+            bx, by = -dx, -dy  # points backwards from the tip
+            rx = bx * math.cos(o) - by * math.sin(o)
+            ry = bx * math.sin(o) + by * math.cos(o)
+            p.drawLine(tip, QtCore.QPointF(tip.x() + rx * head, tip.y() + ry * head))
+
+    p.end()
+    return QtGui.QIcon(pm)
 
 def _preset_button_style(hex_color: str):
     """Return a stylesheet matching the colour-swatch button style, with white label."""
@@ -64,6 +100,19 @@ def _preset_button_style(hex_color: str):
         }}
     """
 
+def _swatch_style(hex_color: str):
+    """Stylesheet for the clickable colour swatch button."""
+    return f"""
+        QPushButton {{
+            background-color: {hex_color};
+            border: 2px solid {hex_color};
+            border-radius: 4px;
+        }}
+        QPushButton:hover {{
+            border: 2px solid #ffffff;
+        }}
+    """
+
 def _load_presets():
     """Load presets from JSON. Returns [] on any error."""
     if not os.path.exists(PRESETS_PATH):
@@ -78,7 +127,6 @@ def _load_presets():
         return []
 
 
-
 # ---------------------------------------------------------------------------
 # Main Panel Widget
 # ---------------------------------------------------------------------------
@@ -89,7 +137,9 @@ class Window(QtWidgets.QWidget):
         super(Window, self).__init__(parent)
         self.setWindowTitle("Backdrop Creator - Compositing Companion")
 
-        self.resize(400, 500)
+        self.resize(360, 320)
+
+        self.iconColor = randomColor()
 
         self._build_ui()
         self._connect_signals()
@@ -124,29 +174,46 @@ class Window(QtWidgets.QWidget):
         root_layout.addWidget(self.header_label)
         root_layout.addWidget(self._make_separator())
 
-        # ---- Name input row ----
+        # ---- Name + color row ----
         input_row = QtWidgets.QHBoxLayout()
         input_row.addWidget(QtWidgets.QLabel("Name:"))
 
         self.name_field = QtWidgets.QLineEdit()
         self.name_field.setPlaceholderText("Enter backdrop name...")
+        input_row.addWidget(self.name_field, 1)
 
-        input_row.addWidget(self.name_field)
+        # Colour swatch = button that opens the picker
+        self.color_icn = QtWidgets.QPushButton()
+        self.color_icn.setFixedSize(32, 24)
+        self.color_icn.setCursor(QtCore.Qt.PointingHandCursor)
+        self.color_icn.setToolTip("Click to pick a colour")
+
+        # Random colour button with two rotating arrows icon
+        self.random_color_btn = QtWidgets.QPushButton()
+        self.random_color_btn.setIcon(_refresh_icon(32))
+        self.random_color_btn.setIconSize(QtCore.QSize(18, 18))
+        self.random_color_btn.setFixedSize(28, 24)
+        self.random_color_btn.setToolTip("Random colour")
+
+        input_row.addWidget(self.color_icn)
+        input_row.addWidget(self.random_color_btn)
         root_layout.addLayout(input_row)
+
+        self._set_color(self.iconColor)
 
         # ---- Format Layout ----
         format_layout = QtWidgets.QHBoxLayout()
 
         self.center_check = QtWidgets.QCheckBox("Center")
-        self.center_check.setChecked(True) 
+        self.center_check.setChecked(True)
 
         self.bold_check = QtWidgets.QCheckBox("Bold")
-        self.bold_check.setChecked(True) 
+        self.bold_check.setChecked(True)
 
         self.italics_check = QtWidgets.QCheckBox("Italics")
 
         self.bookmark_check = QtWidgets.QCheckBox("Bookmark")
-        self.bookmark_check.setChecked(True) 
+        self.bookmark_check.setChecked(True)
 
         self.filled_check = QtWidgets.QCheckBox("Filled")
         self.filled_check.setChecked(True)
@@ -158,20 +225,6 @@ class Window(QtWidgets.QWidget):
 
         self.size_text = QtWidgets.QLabel("Size")
 
-        self.color_icn = QtWidgets.QPushButton()
-        self.color_icn.setEnabled(False)
-        self.iconColor = randomColor()
-        self.color_icn.setStyleSheet(f"""
-            QPushButton:disabled {{
-                background-color: {self.iconColor};
-                color: #ffffff;
-                border: 2px solid {self.iconColor};
-                border-radius: 4px;      
-                font-weight: bold;
-                font-size: 14px;
-            }}
-        """)
-
         format_layout.addWidget(self.center_check)
         format_layout.addWidget(self.bold_check)
         format_layout.addWidget(self.italics_check)
@@ -179,10 +232,8 @@ class Window(QtWidgets.QWidget):
         format_layout.addWidget(self.filled_check)
         format_layout.addWidget(self.size_spb)
         format_layout.addWidget(self.size_text)
-        format_layout.addWidget(self.color_icn)
 
         root_layout.addLayout(format_layout)
-
 
         root_layout.addWidget(self._make_separator())
 
@@ -235,7 +286,29 @@ class Window(QtWidgets.QWidget):
         self.name_field.returnPressed.connect(self._on_enter_pressed)
         self.create_btn.clicked.connect(self._on_run)
         self.cancel_btn.clicked.connect(self._on_reset)
-    
+        self.random_color_btn.clicked.connect(self._on_random_color)
+        self.color_icn.clicked.connect(self._on_pick_color)
+        self.reload_btn.clicked.connect(self._populate_presets)
+
+    # ------------------------------------------------------------------
+    # Color handling
+    # ------------------------------------------------------------------
+
+    def _set_color(self, hex_color: str):
+        """Single entry point to change the current colour and refresh the swatch."""
+        self.iconColor = hex_color
+        self.color_icn.setStyleSheet(_swatch_style(hex_color))
+        self.color_icn.setToolTip(f"{hex_color.upper()} - click to pick a colour")
+
+    def _on_random_color(self):
+        self._set_color(randomColor())
+
+    def _on_pick_color(self):
+        initial = QtGui.QColor(self.iconColor)
+        color = QtWidgets.QColorDialog.getColor(initial, self, "Pick backdrop colour")
+        if color.isValid():
+            self._set_color(color.name())  # '#rrggbb'
+
     # ------------------------------------------------------------------
     # Preset loader
     # ------------------------------------------------------------------
@@ -278,7 +351,7 @@ class Window(QtWidgets.QWidget):
         self.bookmark_check.setChecked(preset.get("bookmark", True))
         self.filled_check.setChecked(preset.get("filled", True))
         self.size_spb.setValue(preset.get("size", 25))
-        self.iconColor = preset.get("color", "#3a3a3a")
+        self._set_color(preset.get("color", "#3a3a3a"))
         self._on_run()
 
     # ------------------------------------------------------------------
@@ -286,42 +359,31 @@ class Window(QtWidgets.QWidget):
     # ------------------------------------------------------------------
 
     def _on_run(self):
-        
-        uiValue_name = self.name_field.text()
-        uiValue_center = self.center_check.isChecked()
-        uiValue_bold = self.bold_check.isChecked()
-        uiValue_italics = self.italics_check.isChecked()
-        uiValue_bookmark = self.bookmark_check.isChecked()
-        uivalue_filled = self.filled_check.isChecked()
-        uiValue_size = self.size_spb.value()
-        uiValue_color = self.iconColor
-        
+
         uiData = {
-            "name": uiValue_name,
-            "center": uiValue_center,
-            "bold": uiValue_bold,
-            "italics": uiValue_italics,
-            "bookmark": uiValue_bookmark,
-            "filled": uivalue_filled,
-            "size": uiValue_size,
-            "color": uiValue_color
+            "name": self.name_field.text(),
+            "center": self.center_check.isChecked(),
+            "bold": self.bold_check.isChecked(),
+            "italics": self.italics_check.isChecked(),
+            "bookmark": self.bookmark_check.isChecked(),
+            "filled": self.filled_check.isChecked(),
+            "size": self.size_spb.value(),
+            "color": self.iconColor
         }
 
         backDropFunctions.createBackDrop(uiData)
         self.window().close()
 
-
     def _on_reset(self):
+        """Reset the form to defaults."""
         self.name_field.clear()
-        self.mode_combo.setCurrentIndex(0)
-        self.enable_check.setChecked(False)
-        self.log_output.clear()
-
-    def log(self, message: str):
-        """Append a line to the log area and echo to Nuke's script editor."""
-        self.log_output.appendPlainText(message)
-        print(f"[MyPanel] {message}")
-
+        self.center_check.setChecked(True)
+        self.bold_check.setChecked(True)
+        self.italics_check.setChecked(False)
+        self.bookmark_check.setChecked(True)
+        self.filled_check.setChecked(True)
+        self.size_spb.setValue(25)
+        self._set_color(randomColor())
 
 
 # ---------------------------------------------------------------------------
@@ -333,9 +395,8 @@ def show_floating():
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
     dialog = QtWidgets.QDialog()
     dialog.setWindowTitle("[CC] - Compositing Companion")
-    dialog.setMinimumWidth(500)
-    
+    dialog.setMinimumWidth(360)
+
     layout = QtWidgets.QVBoxLayout(dialog)
     layout.addWidget(Window())
     dialog.exec_()
-
