@@ -135,9 +135,6 @@ class CCMenuBuilder:
         gizmosMenu = parentMenu.addMenu("CC_Gizmos", icon = _icon("gizmo"))
         self._scanDirectory(self.gizmosDir, gizmosMenu, ".gizmo", _make_gizmo_command)
         self._scanDirectory(self.gizmosDir, gizmosMenu, ".nk", _make_template_command)
-        # Load .dll plugins - WARNING: It may not work if the .dll was not built for the nuke version, the node may fail!
-        binExt = {"win32": ".dll", "darwin": ".dylib"}.get(sys.platform, ".so")
-        self._scanDirectory(self.gizmosDir, gizmosMenu, binExt, _make_gizmo_command)
     
 
 
