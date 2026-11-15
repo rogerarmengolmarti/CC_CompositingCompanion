@@ -1,0 +1,148 @@
+set cut_paste_input [stack 0]
+version 17.1 v2
+push $cut_paste_input
+Group {
+ name PROMIST
+ tile_color 0x444f2aff
+ label "Opticals_v2\n"
+ selected true
+ xpos 315
+ ypos 15214
+ addUserKnob {20 Promist l PROMIST t "nuke.thisNode()\['blurSize'].setValue(20)\nnuke.thisNode()\['exponent'].setValue(1)\nnuke.thisNode()\['amount'].setValue(0.2)\nnuke.thisNode()\['blurMult'].setValue(1)"}
+ addUserKnob {26 Promist_txt l PROMIST T ""}
+ addUserKnob {7 blurSize l "Blur Size"}
+ blurSize 10
+ addUserKnob {7 amount l Amount}
+ amount 0.04
+ addUserKnob {26 ""}
+ addUserKnob {22 reset_btn l reset T "nuke.thisNode()\['blurSize'].setValue(20)\nnuke.thisNode()\['exponent'].setValue(1)\nnuke.thisNode()\['amount'].setValue(0.2)\nnuke.thisNode()\['blurMult'].setValue(1)" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -93
+  ypos -769
+ }
+ Dot {
+  name Dot2
+  xpos -59
+  ypos -653
+ }
+set N92c54d00 [stack 0]
+ Dot {
+  name Dot3
+  xpos -396
+  ypos -653
+ }
+ Dot {
+  name Dot5
+  xpos -396
+  ypos -229
+ }
+set N92c55600 [stack 0]
+ Dot {
+  name Dot6
+  xpos -255
+  ypos -229
+ }
+push $N92c54d00
+ Crop {
+  box {0 0 {width} {height}}
+  name CropIN
+  xpos -93
+  ypos -543
+ }
+ Dot {
+  name Dot1
+  xpos -59
+  ypos -449
+ }
+set N92e04000 [stack 0]
+ Blur {
+  channels rgb
+  size {{(1/ResolutionMaster.format.width*width)*parent.blurSize*pow(4,2)}}
+  name Blur4
+  xpos 90
+  ypos -344
+ }
+push $N92e04000
+ Blur {
+  channels rgb
+  size {{(1/ResolutionMaster.format.width*width)*parent.blurSize*pow(3,2)}}
+  name Blur3
+  xpos -29
+  ypos -343
+ }
+push 0
+push $N92e04000
+ Blur {
+  channels rgb
+  size {{(1/ResolutionMaster.format.width*width)*parent.blurSize*pow(2,2)}}
+  name Blur2
+  xpos -153
+  ypos -341
+ }
+push $N92e04000
+ Blur {
+  channels rgb
+  size {{(1/ResolutionMaster.format.width*width)*parent.blurSize*pow(1,2)}}
+  name Blur1
+  xpos -266
+  ypos -342
+ }
+ Merge2 {
+  inputs 4+1
+  operation average
+  Achannels rgb
+  name Merge1
+  xpos -83
+  ypos -206
+ }
+set N92e1aa00 [stack 0]
+ Dot {
+  name Dot4
+  xpos -49
+  ypos -85
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -289
+  ypos -88
+ }
+push $N92c55600
+ Dissolve {
+  inputs 2
+  channels rgb
+  which {{parent.amount}}
+  name Dissolve1
+  xpos -430
+  ypos -88
+ }
+ Output {
+  name Output1
+  xpos -430
+  ypos 130
+ }
+ Reformat {
+  inputs 0
+  format "3840 1600 0 0 3840 1600 1 "
+  name ResolutionMaster
+  xpos 192
+  ypos -606
+ }
+push $N92e1aa00
+push 0
+push $N92c54d00
+push 0
+ Viewer {
+  inputs 4
+  frame_range 1-100
+  input_number 1
+  render_settings_schema false
+  monitorOutNDISenderName "Nuke - EX01_Forest_RogerArmengolMartiv_002 - Viewer1"
+  name Viewer1
+  xpos 27
+  ypos -206
+ }
+end_group
