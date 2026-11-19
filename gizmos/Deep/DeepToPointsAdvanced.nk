@@ -1,0 +1,16 @@
+set cut_paste_input [stack 0]
+version 17.1 v1
+push $cut_paste_input
+DeepToPointsAdvanced {
+ display solid
+ render_mode solid
+ cast_shadow false
+ receive_shadow false
+ point_detail 0.005
+ point_size 0.25
+ make_prims false
+ name DeepToPointsAdvanced1
+ selected true
+ xpos -3730
+ ypos -1836
+}

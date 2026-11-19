@@ -1,0 +1,22 @@
+set cut_paste_input [stack 0]
+version 17.1 v1
+push 0
+push $cut_paste_input
+PointsToCards {
+ inputs 2
+ size 0.25
+ size_jitter 0.1
+ rot_jitter 0.1
+ defocus true
+ min_size 0.25
+ max_size 10
+ falloff_dist 25
+ falloff_curve "Ease In"
+ flow_on true
+ rest_to_current true
+ name PointsToCards1
+ tile_color 0xffffffff
+ selected true
+ xpos -3730
+ ypos -1563
+}
