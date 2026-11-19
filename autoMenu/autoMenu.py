@@ -91,6 +91,7 @@ class CCMenuBuilder:
         self.iconsDir     = os.path.join(pluginRoot, "icons")
         self.externalDir  = os.path.join(pluginRoot, "external")
         self.toolsDir     = os.path.join(pluginRoot, "tools")
+        self.pluginDir    = os.path.join(pluginRoot, "plugins")
  
         # Register gizmos dirs with Nuke
         if os.path.isdir(self.gizmosDir):
@@ -116,6 +117,9 @@ class CCMenuBuilder:
             mb_ccMenu = menubar.addMenu("[CC]")
             mb_ccMenu_tools = mb_ccMenu.addMenu("Tools")
             self._buildToolsMenu(mb_ccMenu_tools)
+
+            # ----- Load Plugins -----
+            self._loadPlugins()
 
         except Exception as e:
             nuke.message("[CC] Error when building menu: {}".format(e))
@@ -150,6 +154,23 @@ class CCMenuBuilder:
         """Build the top menu"""
         self._scanDirectory(self.toolsDir, parentMenu, ".py", _make_runableTool_command, shortcut="embeded")
     
+
+    def _loadPlugins(self):
+        "load plugins"
+
+        try:
+            entries = sorted(os.listdir(self.pluginDir))
+        except OSError as e:
+            print("[CC] Error accessing directory '{}': {}".format(directory, e))
+            return
+
+        for entry in entries:
+            path = os.path.join(self.pluginDir, entry)
+            print(f'[CC] Plugins Detected: {entry} path: {path}')
+            try:
+                nuke.pluginAddPath(path)
+            except:
+                print(f'[CC] Could not load plugin {entry} at {path}')
 
     
 

@@ -6,3 +6,4 @@ external/*
 __pycache__
 *dev*  
 *pyc
+plugins/*
