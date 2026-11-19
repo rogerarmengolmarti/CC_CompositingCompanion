@@ -1,13 +1,14 @@
 set cut_paste_input [stack 0]
-version 15.2 v6
+version 17.1 v2
 push $cut_paste_input
 Expression {
  expr0 abs(r)
  expr1 abs(g)
  expr2 abs(b)
  expr3 abs(a)
- name ABS
+ name Absolute
+ tile_color 0x28a37eff
  selected true
- xpos -381
- ypos 13014
+ xpos -971
+ ypos -347
 }

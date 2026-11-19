@@ -1,6 +1,7 @@
 autoMenu/__pycache__
 external/*
 !external/Lensing/
+!external/Lensing/
 !external/Utility/
 __pycache__
 *dev*  

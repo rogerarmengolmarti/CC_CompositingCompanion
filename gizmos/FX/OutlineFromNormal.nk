@@ -1,17 +1,18 @@
 set cut_paste_input [stack 0]
-version 15.1 v2
+version 17.1 v2
 push $cut_paste_input
 Group {
  name OutlineFromNormal1
  tile_color 0x29a580ff
  selected true
- xpos -14678
- ypos -1943
+ xpos -1247
+ ypos -245
+ disable_group_view true
  addUserKnob {20 tab l Properties}
- addUserKnob {26 text l "<b><font color=#ffffff>Edge Detection</font><b>"}
+ addUserKnob {26 text l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nEdge Detection\n"}
  addUserKnob {7 threshold l Threshold R 0 3}
  threshold 1
- addUserKnob {26 title_refine l "<b><font color=#ffffff>Refine</font><b>"}
+ addUserKnob {26 title_refine l "" +STARTLINE T "<font color=#4cc799><font size=\"4\"><b><br>\nRefine"}
  addUserKnob {41 gain l Gain T ColorCorrect1.gain}
  addUserKnob {41 contrast l Contrast T ColorCorrect1.contrast}
  addUserKnob {41 size l Blur T Blur11.size}
@@ -21,7 +22,7 @@ Group {
  addUserKnob {41 range l Range T Keyer3.range}
  addUserKnob {26 ""}
  addUserKnob {26 space l "  " T "\n\n\n"}
- addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">Outline From Normal</font><font size=\"3\"> v1.0 - by Roger Armengol Martí</font>"}
+ addUserKnob {26 signature l "" +STARTLINE T "<font color=#aaaaaa><font size=\"4\">Outline From Normal</font><font size=\"3\"> v1.0.000 - by Roger Armengol Martí</font>"}
 }
  Input {
   inputs 0
@@ -34,7 +35,7 @@ Group {
   xpos -553
   ypos -524
  }
-set Ncf280c00 [stack 0]
+set Ncc6e7680 [stack 0]
  Dot {
   name Dot99
   xpos -773
@@ -46,7 +47,7 @@ set Ncf280c00 [stack 0]
   xpos -807
   ypos -335
  }
-push $Ncf280c00
+push $Ncc6e7680
  Merge2 {
   inputs 2
   operation minus
@@ -96,8 +97,14 @@ push $Ncf280c00
   ypos 406
  }
  Shuffle2 {
-  fromInput1 {{0} B}
-  fromInput2 {{0} B}
+  fromInput1 {
+   {0}
+   B
+  }
+  fromInput2 {
+   {0}
+   B
+  }
   mappings "4 rgba.alpha 0 3 rgba.alpha 0 3 rgba.alpha 0 3 rgba.red 0 0 rgba.alpha 0 3 rgba.green 0 1 rgba.alpha 0 3 rgba.blue 0 2"
   name Shuffle35
   label "\[value in1]"
@@ -114,6 +121,7 @@ push 0
   inputs 2
   frame_range 1001-1025
   input_number 1
+  render_settings_schema false
   monitorOutNDISenderName "NukeX - RnD_pose_01_NUKE_v027 - Viewer1"
   name Viewer1
   xpos -587
