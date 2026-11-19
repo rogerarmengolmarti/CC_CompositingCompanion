@@ -1,0 +1,2246 @@
+Group {
+ name mtComa
+ tile_color 0xe0834cff
+ note_font "Verdana Bold"
+ addUserKnob {20 User}
+ addUserKnob {6 checkDis l "check Distortion" +STARTLINE}
+ addUserKnob {26 text_1 l " " T " "}
+ addUserKnob {7 lenght l Iterations t "The amount of iterations" R 1 10}
+ lenght 10
+ addUserKnob {7 offset l Lenght t "How far the tail extends" R -0.4 0.4}
+ offset 0.25
+ addUserKnob {26 ""}
+ addUserKnob {7 growth l "Expo Growth" t "The exponential amount of blur" R 0 6}
+ growth 3
+ addUserKnob {7 linearGrowth l "Linear Growth" t "The linear amount of blur" R 0 10}
+ linearGrowth 1
+ addUserKnob {26 ""}
+ addUserKnob {7 core l Core t "Inner Mix" R 0 2}
+ core 0.45
+ addUserKnob {7 coreexpansion l "Core expansion" R 0.01 5}
+ coreexpansion 1.5
+ addUserKnob {26 text l " " T " "}
+ addUserKnob {20 group l "Advance Options" n 1}
+ group 0
+ addUserKnob {7 decay l Decay}
+ decay 0.5
+ addUserKnob {26 text_7 l " " T " "}
+ addUserKnob {41 size l "Noise Size" T Noise1.size}
+ addUserKnob {41 size_1 l "Noise Blur" T Blur73.size}
+ addUserKnob {7 noisePower l Noise}
+ addUserKnob {26 text_6 l " " T " "}
+ addUserKnob {7 rScale l "Red Lenght" R -0.5 0.5}
+ addUserKnob {7 gScale l "Green Lenght" R -0.5 0.5}
+ addUserKnob {7 bScale l "Blue Lenght" R -0.5 0.5}
+ addUserKnob {26 text_3 l " " T " "}
+ addUserKnob {7 rBlur l "Red Growth"}
+ addUserKnob {7 gBlur l "Green Growth"}
+ addUserKnob {7 bBlur l "Blue Growth"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 text_2 l " " T " "}
+ addUserKnob {7 intensity l Intensity t MIX R 0 2}
+ intensity 1
+ addUserKnob {26 text_4 l " " T " "}
+ addUserKnob {26 text_5 l " " T "Miguel Torija - Coma beta"}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -280
+  ypos -542
+ }
+ Dot {
+  name Dot8
+  xpos -246
+  ypos -211
+ }
+set N6f91f800 [stack 0]
+ Expression {
+  expr0 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr1 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr2 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr3 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  name Expression4
+  xpos -104
+  ypos -215
+  addUserKnob {20 User}
+  addUserKnob {7 scale R 0 100}
+  scale 75
+ }
+ FilterErode {
+  channels all
+  size -8
+  name FilterErode2
+  xpos -104
+  ypos -167
+ }
+ Blur {
+  size 10
+  name Blur22
+  xpos -104
+  ypos -125
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.45
+  whitepoint 0.55
+  white_clamp true
+  name Grade1
+  xpos -104
+  ypos -87
+ }
+set N6f91e800 [stack 0]
+push $N6f91e800
+push $N6f91f800
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input0]"}}
+  name Switch3
+  label "\[value which]"
+  xpos -280
+  ypos -88
+ }
+ Switch {
+  inputs 2
+  which {{checkDis}}
+  name Switch2
+  label "\[value which]"
+  xpos -280
+  ypos 42
+ }
+ Dot {
+  name Dot2
+  xpos -246
+  ypos 228
+ }
+set N6f91dc00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -224
+  ypos 1927
+ }
+set N6f91d800 [stack 0]
+ Remove {
+  name Remove1
+  xpos -418
+  ypos 1918
+ }
+set N6f91d400 [stack 0]
+ Radial {
+  area {{width} {height} 0 0}
+  name Radial1
+  xpos -418
+  ypos 1954
+ }
+ Transform {
+  scale {{coreexpansion}}
+  center {{width/2} {height/2}}
+  name Transform11
+  xpos -418
+  ypos 1978
+ }
+ Clamp {
+  name Clamp1
+  xpos -418
+  ypos 2014
+ }
+ Blur {
+  size 20
+  name Blur7
+  xpos -418
+  ypos 2059
+ }
+push $N6f91d400
+ Noise {
+  size 30
+  center {960 540}
+  name Noise1
+  xpos -823
+  ypos 1924
+ }
+ Blur {
+  size 5
+  name Blur73
+  xpos -823
+  ypos 1948
+ }
+push $N6f91dc00
+ Dot {
+  name Dot3
+  xpos -1517
+  ypos 228
+ }
+set N6f8bfc00 [stack 0]
+ Dot {
+  name Dot9
+  xpos -2920
+  ypos 228
+ }
+set N6f8bf800 [stack 0]
+ Dot {
+  name Dot11
+  xpos -4152
+  ypos 229
+ }
+set N6f8bf400 [stack 0]
+ Dot {
+  name Dot14
+  xpos -4992
+  ypos 227
+ }
+ Transform {
+  scale {{"clamp(((1+(offset/60))+(0)), -0.99, 1.03)"}}
+  center {{width/2} {height/2}}
+  name Transform32
+  xpos -5026
+  ypos 335
+ }
+set N6f8bec00 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform33
+  xpos -5026
+  ypos 427
+ }
+set N6f8be800 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform34
+  xpos -5026
+  ypos 523
+ }
+set N6f8be400 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform35
+  xpos -5026
+  ypos 622
+ }
+set N6f8be000 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform36
+  xpos -5026
+  ypos 704
+ }
+set N6f8bdc00 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform37
+  xpos -5026
+  ypos 787
+ }
+set N6f8bd800 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform38
+  xpos -5022
+  ypos 882
+ }
+set N6f8bd400 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform39
+  xpos -5022
+  ypos 969
+ }
+set N6f8bd000 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform40
+  xpos -5022
+  ypos 1049
+ }
+set N6f8bcc00 [stack 0]
+ Transform {
+  scale {{Transform32.scale}}
+  center {{Transform32.center.x} {Transform32.center.y}}
+  name Transform41
+  xpos -5022
+  ypos 1156
+ }
+ Blur {
+  size {{linearGrowth+(growth*10)}}
+  name Blur33
+  xpos -4893
+  ypos 1150
+ }
+ Multiply {
+  value {{clamp(lenght-9)}}
+  name Multiply63
+  xpos -4756
+  ypos 1150
+ }
+ Multiply {
+  value {{1-((decay)/1)}}
+  name Multiply64
+  xpos -4610
+  ypos 1150
+ }
+push $N6f8bcc00
+ Blur {
+  size {{linearGrowth+(growth*9)}}
+  name Blur34
+  xpos -4898
+  ypos 1043
+ }
+ Multiply {
+  value {{clamp(lenght-8)}}
+  name Multiply65
+  xpos -4752
+  ypos 1043
+ }
+ Multiply {
+  value {{1-((decay)*0.9)}}
+  name Multiply66
+  xpos -4602
+  ypos 1043
+ }
+push $N6f8bd000
+ Blur {
+  size {{linearGrowth+(growth*8)}}
+  name Blur35
+  xpos -4900
+  ypos 963
+ }
+ Multiply {
+  value {{clamp(lenght-7)}}
+  name Multiply67
+  xpos -4740
+  ypos 963
+ }
+ Multiply {
+  value {{1-((decay)*0.8)}}
+  name Multiply68
+  xpos -4595
+  ypos 963
+ }
+push $N6f8bd400
+ Blur {
+  size {{linearGrowth+(growth*7)}}
+  name Blur36
+  xpos -4894
+  ypos 875
+ }
+ Multiply {
+  value {{clamp(lenght-6)}}
+  name Multiply69
+  xpos -4748
+  ypos 875
+ }
+ Multiply {
+  value {{1-((decay)*0.7)}}
+  name Multiply70
+  xpos -4590
+  ypos 875
+ }
+push $N6f8bd800
+ Blur {
+  size {{linearGrowth+(growth*6)}}
+  name Blur37
+  xpos -4896
+  ypos 781
+ }
+ Multiply {
+  value {{clamp(lenght-5)}}
+  name Multiply71
+  xpos -4752
+  ypos 780
+ }
+ Multiply {
+  value {{1-((decay)*0.6)}}
+  name Multiply72
+  xpos -4589
+  ypos 780
+ }
+push $N6f8bdc00
+ Blur {
+  size {{linearGrowth+(growth*5)}}
+  name Blur38
+  xpos -4901
+  ypos 696
+ }
+ Multiply {
+  value {{clamp(lenght-4)}}
+  name Multiply73
+  xpos -4743
+  ypos 696
+ }
+ Multiply {
+  value {{1-((decay)*0.5)}}
+  name Multiply74
+  xpos -4588
+  ypos 696
+ }
+push $N6f8be000
+ Blur {
+  size {{linearGrowth+(growth*4)}}
+  name Blur39
+  xpos -4890
+  ypos 614
+ }
+ Multiply {
+  value {{clamp(lenght-3)}}
+  name Multiply75
+  xpos -4752
+  ypos 614
+ }
+ Multiply {
+  value {{1-((decay)*0.4)}}
+  name Multiply76
+  xpos -4590
+  ypos 614
+ }
+push $N6f8be400
+ Blur {
+  size {{linearGrowth+(growth*3)}}
+  name Blur40
+  xpos -4897
+  ypos 515
+ }
+ Multiply {
+  value {{clamp(lenght-2)}}
+  name Multiply77
+  xpos -4747
+  ypos 515
+ }
+ Multiply {
+  value {{1-((decay)*0.3)}}
+  name Multiply78
+  xpos -4588
+  ypos 515
+ }
+push $N6f8be800
+ Blur {
+  size {{linearGrowth+(growth*2)}}
+  name Blur41
+  xpos -4896
+  ypos 421
+ }
+ Multiply {
+  value {{clamp(lenght-1)}}
+  name Multiply79
+  xpos -4749
+  ypos 421
+ }
+ Multiply {
+  value {{1-((decay)*0.2)}}
+  name Multiply80
+  xpos -4604
+  ypos 421
+ }
+push $N6f8bec00
+ Blur {
+  size {{linearGrowth+(growth*1)}}
+  name Blur42
+  xpos -4885
+  ypos 329
+ }
+ Multiply {
+  value {{clamp(lenght)}}
+  name Multiply81
+  xpos -4749
+  ypos 329
+ }
+ Multiply {
+  value {{1-((decay)*0.01)}}
+  name Multiply82
+  xpos -4598
+  ypos 329
+ }
+ Dot {
+  name Dot15
+  xpos -4404
+  ypos 338
+ }
+ Merge2 {
+  inputs 2
+  name Merge31
+  xpos -4438
+  ypos 427
+ }
+ Merge2 {
+  inputs 2
+  name Merge32
+  xpos -4438
+  ypos 521
+ }
+ Merge2 {
+  inputs 2
+  name Merge33
+  xpos -4438
+  ypos 620
+ }
+ Merge2 {
+  inputs 2
+  name Merge34
+  xpos -4438
+  ypos 702
+ }
+ Merge2 {
+  inputs 2
+  name Merge35
+  xpos -4438
+  ypos 786
+ }
+ Merge2 {
+  inputs 2
+  name Merge36
+  xpos -4438
+  ypos 881
+ }
+ Merge2 {
+  inputs 2
+  name Merge37
+  xpos -4438
+  ypos 969
+ }
+ Merge2 {
+  inputs 2
+  name Merge38
+  xpos -4438
+  ypos 1049
+ }
+ Merge2 {
+  inputs 2
+  name Merge39
+  xpos -4438
+  ypos 1156
+ }
+ Dot {
+  name Dot16
+  xpos -4404
+  ypos 1757
+ }
+push $N6f8bf400
+ Shuffle {
+  green black
+  blue black
+  name Shuffle2
+  xpos -4186
+  ypos 272
+ }
+ Transform {
+  scale {{"clamp(((1+(offset/60))+(rScale/100)), -0.99, 1.03)"}}
+  center {{width/2} {height/2}}
+  name Transform22
+  xpos -4186
+  ypos 337
+ }
+set N7081d000 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform23
+  xpos -4186
+  ypos 429
+ }
+set N7081cc00 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform24
+  xpos -4186
+  ypos 525
+ }
+set N7081c800 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform25
+  xpos -4186
+  ypos 624
+ }
+set N7081c400 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform26
+  xpos -4186
+  ypos 706
+ }
+set N707b3c00 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform27
+  xpos -4186
+  ypos 789
+ }
+set N707b3800 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform28
+  xpos -4182
+  ypos 884
+ }
+set N707b3400 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform29
+  xpos -4182
+  ypos 971
+ }
+set N707b3000 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform30
+  xpos -4182
+  ypos 1051
+ }
+set N707b2c00 [stack 0]
+ Transform {
+  scale {{Transform22.scale}}
+  center {{Transform22.center.x} {Transform22.center.y}}
+  name Transform31
+  xpos -4182
+  ypos 1158
+ }
+ Blur {
+  size {{linearGrowth+(growth*10)}}
+  name Blur23
+  xpos -4051
+  ypos 1152
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur52
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3850
+  ypos 1141
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 10
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop11
+  xpos -3722
+  ypos 1152
+ }
+ Multiply {
+  value {{clamp(lenght-9)}}
+  name Multiply43
+  xpos -3590
+  ypos 1152
+ }
+ Multiply {
+  value {{1-((decay)/1)}}
+  name Multiply44
+  xpos -3444
+  ypos 1152
+ }
+push $N707b2c00
+ Blur {
+  size {{linearGrowth+(growth*9)}}
+  name Blur24
+  xpos -4058
+  ypos 1045
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur51
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3855
+  ypos 1040
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 9
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop10
+  xpos -3714
+  ypos 1043
+ }
+ Multiply {
+  value {{clamp(lenght-8)}}
+  name Multiply45
+  xpos -3586
+  ypos 1045
+ }
+ Multiply {
+  value {{1-((decay)*0.9)}}
+  name Multiply46
+  xpos -3436
+  ypos 1045
+ }
+push $N707b3000
+ Blur {
+  size {{linearGrowth+(growth*8)}}
+  name Blur25
+  xpos -4060
+  ypos 965
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur50
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3859
+  ypos 960
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 8
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop9
+  xpos -3713
+  ypos 967
+ }
+ Multiply {
+  value {{clamp(lenght-7)}}
+  name Multiply47
+  xpos -3574
+  ypos 965
+ }
+ Multiply {
+  value {{1-((decay)*0.8)}}
+  name Multiply48
+  xpos -3429
+  ypos 965
+ }
+push $N707b3400
+ Blur {
+  size {{linearGrowth+(growth*7)}}
+  name Blur26
+  xpos -4054
+  ypos 877
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur49
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3859
+  ypos 867
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 7
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop8
+  xpos -3714
+  ypos 878
+ }
+ Multiply {
+  value {{clamp(lenght-6)}}
+  name Multiply49
+  xpos -3582
+  ypos 877
+ }
+ Multiply {
+  value {{1-((decay)*0.7)}}
+  name Multiply50
+  xpos -3424
+  ypos 877
+ }
+push $N707b3800
+ Blur {
+  size {{linearGrowth+(growth*6)}}
+  name Blur27
+  xpos -4056
+  ypos 783
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur48
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3861
+  ypos 778
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 6
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop7
+  xpos -3702
+  ypos 789
+ }
+ Multiply {
+  value {{clamp(lenght-5)}}
+  name Multiply51
+  xpos -3586
+  ypos 782
+ }
+ Multiply {
+  value {{1-((decay)*0.6)}}
+  name Multiply52
+  xpos -3423
+  ypos 782
+ }
+push $N707b3c00
+ Blur {
+  size {{linearGrowth+(growth*5)}}
+  name Blur28
+  xpos -4061
+  ypos 698
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur47
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3863
+  ypos 693
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 5
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop6
+  xpos -3703
+  ypos 704
+ }
+ Multiply {
+  value {{clamp(lenght-4)}}
+  name Multiply53
+  xpos -3577
+  ypos 698
+ }
+ Multiply {
+  value {{1-((decay)*0.5)}}
+  name Multiply54
+  xpos -3422
+  ypos 698
+ }
+push $N7081c400
+ Blur {
+  size {{linearGrowth+(growth*4)}}
+  name Blur29
+  xpos -4050
+  ypos 616
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur46
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3866
+  ypos 611
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 4
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop5
+  xpos -3696
+  ypos 622
+ }
+ Multiply {
+  value {{clamp(lenght-3)}}
+  name Multiply55
+  xpos -3586
+  ypos 616
+ }
+ Multiply {
+  value {{1-((decay)*0.4)}}
+  name Multiply56
+  xpos -3424
+  ypos 616
+ }
+push $N7081c800
+ Blur {
+  size {{linearGrowth+(growth*3)}}
+  name Blur30
+  xpos -4057
+  ypos 517
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur45
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3871
+  ypos 512
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 3
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop4
+  xpos -3691
+  ypos 523
+ }
+ Multiply {
+  value {{clamp(lenght-2)}}
+  name Multiply57
+  xpos -3581
+  ypos 517
+ }
+ Multiply {
+  value {{1-((decay)*0.3)}}
+  name Multiply58
+  xpos -3422
+  ypos 517
+ }
+push $N7081cc00
+ Blur {
+  size {{linearGrowth+(growth*2)}}
+  name Blur31
+  xpos -4056
+  ypos 423
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur44
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3863
+  ypos 418
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 {{parent.Blur43.double_1}}
+  addUserKnob {7 double l lol R 1 11}
+  double 2
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop3
+  xpos -3703
+  ypos 429
+ }
+ Multiply {
+  value {{clamp(lenght-1)}}
+  name Multiply59
+  xpos -3583
+  ypos 423
+ }
+ Multiply {
+  value {{1-((decay)*0.2)}}
+  name Multiply60
+  xpos -3438
+  ypos 423
+ }
+push $N7081d000
+ Blur {
+  size {{linearGrowth+(growth*1)}}
+  name Blur32
+  xpos -4050
+  ypos 331
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur43
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -3864
+  ypos 326
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 1
+  addUserKnob {7 double_2}
+  double_2 {{rBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop2
+  xpos -3704
+  ypos 337
+ }
+ Multiply {
+  value {{clamp(lenght)}}
+  name Multiply61
+  xpos -3583
+  ypos 331
+ }
+ Multiply {
+  value {{1-((decay)*0.01)}}
+  name Multiply62
+  xpos -3432
+  ypos 331
+ }
+ Dot {
+  name Dot10
+  xpos -3238
+  ypos 340
+ }
+ Merge2 {
+  inputs 2
+  name Merge20
+  xpos -3272
+  ypos 429
+ }
+ Merge2 {
+  inputs 2
+  name Merge21
+  xpos -3272
+  ypos 523
+ }
+ Merge2 {
+  inputs 2
+  name Merge22
+  xpos -3272
+  ypos 622
+ }
+ Merge2 {
+  inputs 2
+  name Merge23
+  xpos -3272
+  ypos 704
+ }
+ Merge2 {
+  inputs 2
+  name Merge24
+  xpos -3272
+  ypos 788
+ }
+ Merge2 {
+  inputs 2
+  name Merge25
+  xpos -3272
+  ypos 883
+ }
+ Merge2 {
+  inputs 2
+  name Merge26
+  xpos -3272
+  ypos 971
+ }
+ Merge2 {
+  inputs 2
+  name Merge27
+  xpos -3272
+  ypos 1051
+ }
+ Merge2 {
+  inputs 2
+  name Merge28
+  xpos -3272
+  ypos 1158
+ }
+ Dot {
+  name Dot12
+  xpos -3238
+  ypos 1524
+ }
+push $N6f8bf800
+ Shuffle {
+  red black
+  blue black
+  name Shuffle1
+  xpos -2954
+  ypos 276
+ }
+ Transform {
+  scale {{"clamp(((1+(offset/60))+(gScale/100)), -0.99, 1.03)"}}
+  center {{width/2} {height/2}}
+  name Transform12
+  xpos -2954
+  ypos 356
+ }
+set N28fc1c00 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform13
+  xpos -2954
+  ypos 448
+ }
+set N28fc1800 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform14
+  xpos -2954
+  ypos 544
+ }
+set N28fc1400 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform15
+  xpos -2954
+  ypos 643
+ }
+set N28fc1000 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform16
+  xpos -2954
+  ypos 725
+ }
+set N28fc0c00 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform17
+  xpos -2954
+  ypos 808
+ }
+set N28fc0800 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform18
+  xpos -2950
+  ypos 903
+ }
+set N28fc0400 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform19
+  xpos -2950
+  ypos 990
+ }
+set N28f5fc00 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform20
+  xpos -2950
+  ypos 1070
+ }
+set N28f5f800 [stack 0]
+ Transform {
+  scale {{Transform12.scale}}
+  center {{Transform12.center.x} {Transform12.center.y}}
+  name Transform21
+  xpos -2950
+  ypos 1177
+ }
+ Blur {
+  size {{linearGrowth+(growth*10)}}
+  name Blur12
+  xpos -2819
+  ypos 1171
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur60
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2637
+  ypos 1160
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 10
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop12
+  xpos -2490
+  ypos 1171
+ }
+ Multiply {
+  value {{clamp(lenght-9)}}
+  name Multiply23
+  xpos -2358
+  ypos 1171
+ }
+ Multiply {
+  value {{1-((decay)/1)}}
+  name Multiply24
+  xpos -2212
+  ypos 1171
+ }
+push $N28f5f800
+ Blur {
+  size {{linearGrowth+(growth*9)}}
+  name Blur14
+  xpos -2826
+  ypos 1064
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur58
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2635
+  ypos 1059
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 9
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop13
+  xpos -2482
+  ypos 1062
+ }
+ Multiply {
+  value {{clamp(lenght-8)}}
+  name Multiply25
+  xpos -2354
+  ypos 1064
+ }
+ Multiply {
+  value {{1-((decay)*0.9)}}
+  name Multiply26
+  xpos -2204
+  ypos 1064
+ }
+push $N28f5fc00
+ Blur {
+  size {{linearGrowth+(growth*8)}}
+  name Blur16
+  xpos -2828
+  ypos 984
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur56
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2624
+  ypos 975
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 8
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop14
+  xpos -2481
+  ypos 986
+ }
+ Multiply {
+  value {{clamp(lenght-7)}}
+  name Multiply27
+  xpos -2342
+  ypos 984
+ }
+ Multiply {
+  value {{1-((decay)*0.8)}}
+  name Multiply28
+  xpos -2197
+  ypos 984
+ }
+push $N28fc0400
+ Blur {
+  size {{linearGrowth+(growth*7)}}
+  name Blur18
+  xpos -2822
+  ypos 896
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur54
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2622
+  ypos 891
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 7
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop15
+  xpos -2482
+  ypos 897
+ }
+ Multiply {
+  value {{clamp(lenght-6)}}
+  name Multiply29
+  xpos -2350
+  ypos 896
+ }
+ Multiply {
+  value {{1-((decay)*0.7)}}
+  name Multiply30
+  xpos -2192
+  ypos 896
+ }
+push $N28fc0800
+ Blur {
+  size {{linearGrowth+(growth*6)}}
+  name Blur20
+  xpos -2824
+  ypos 802
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur21
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2633
+  ypos 798
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 6
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop16
+  xpos -2470
+  ypos 808
+ }
+ Multiply {
+  value {{clamp(lenght-5)}}
+  name Multiply31
+  xpos -2354
+  ypos 801
+ }
+ Multiply {
+  value {{1-((decay)*0.6)}}
+  name Multiply32
+  xpos -2191
+  ypos 801
+ }
+push $N28fc0c00
+ Blur {
+  size {{linearGrowth+(growth*5)}}
+  name Blur53
+  xpos -2829
+  ypos 717
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur19
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2630
+  ypos 712
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 5
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop17
+  xpos -2471
+  ypos 723
+ }
+ Multiply {
+  value {{clamp(lenght-4)}}
+  name Multiply33
+  xpos -2345
+  ypos 717
+ }
+ Multiply {
+  value {{1-((decay)*0.5)}}
+  name Multiply34
+  xpos -2190
+  ypos 717
+ }
+push $N28fc1000
+ Blur {
+  size {{linearGrowth+(growth*4)}}
+  name Blur55
+  xpos -2818
+  ypos 635
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur17
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2621
+  ypos 630
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 4
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop18
+  xpos -2464
+  ypos 641
+ }
+ Multiply {
+  value {{clamp(lenght-3)}}
+  name Multiply35
+  xpos -2354
+  ypos 635
+ }
+ Multiply {
+  value {{1-((decay)*0.4)}}
+  name Multiply36
+  xpos -2192
+  ypos 635
+ }
+push $N28fc1400
+ Blur {
+  size {{linearGrowth+(growth*3)}}
+  name Blur57
+  xpos -2825
+  ypos 536
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur15
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2636
+  ypos 531
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 3
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop19
+  xpos -2459
+  ypos 542
+ }
+ Multiply {
+  value {{clamp(lenght-2)}}
+  name Multiply37
+  xpos -2349
+  ypos 536
+ }
+ Multiply {
+  value {{1-((decay)*0.3)}}
+  name Multiply38
+  xpos -2190
+  ypos 536
+ }
+push $N28fc1800
+ Blur {
+  size {{linearGrowth+(growth*2)}}
+  name Blur59
+  xpos -2824
+  ypos 442
+ }
+ Blur {
+  size {{Blur62.size*double}}
+  name Blur13
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2637
+  ypos 437
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 2
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop20
+  xpos -2471
+  ypos 448
+ }
+ Multiply {
+  value {{clamp(lenght-1)}}
+  name Multiply39
+  xpos -2351
+  ypos 442
+ }
+ Multiply {
+  value {{1-((decay)*0.2)}}
+  name Multiply40
+  xpos -2206
+  ypos 442
+ }
+push $N28fc1c00
+ Blur {
+  size {{linearGrowth+(growth*1)}}
+  name Blur61
+  xpos -2818
+  ypos 350
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur62
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -2633
+  ypos 345
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 1
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop21
+  xpos -2472
+  ypos 356
+ }
+ Multiply {
+  value {{clamp(lenght)}}
+  name Multiply41
+  xpos -2351
+  ypos 350
+ }
+ Multiply {
+  value {{1-((decay)*0.01)}}
+  name Multiply42
+  xpos -2200
+  ypos 350
+ }
+ Dot {
+  name Dot7
+  xpos -2006
+  ypos 359
+ }
+ Merge2 {
+  inputs 2
+  name Merge11
+  xpos -2040
+  ypos 448
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -2040
+  ypos 542
+ }
+ Merge2 {
+  inputs 2
+  name Merge13
+  xpos -2040
+  ypos 641
+ }
+ Merge2 {
+  inputs 2
+  name Merge14
+  xpos -2040
+  ypos 723
+ }
+ Merge2 {
+  inputs 2
+  name Merge15
+  xpos -2040
+  ypos 807
+ }
+ Merge2 {
+  inputs 2
+  name Merge16
+  xpos -2040
+  ypos 902
+ }
+ Merge2 {
+  inputs 2
+  name Merge17
+  xpos -2040
+  ypos 990
+ }
+ Merge2 {
+  inputs 2
+  name Merge18
+  xpos -2040
+  ypos 1070
+ }
+ Merge2 {
+  inputs 2
+  name Merge19
+  xpos -2040
+  ypos 1177
+ }
+ Dot {
+  name Dot13
+  xpos -2006
+  ypos 1314
+ }
+push $N6f8bfc00
+ Shuffle {
+  red black
+  green black
+  name Shuffle4
+  xpos -1551
+  ypos 284
+ }
+ Transform {
+  scale {{"clamp(((1+(offset/60))+(bScale/100)), -0.99, 1.03)"}}
+  center {{width/2} {height/2}}
+  name Transform1
+  xpos -1551
+  ypos 351
+ }
+set N6de96800 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform2
+  xpos -1551
+  ypos 443
+ }
+set N6de96400 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform3
+  xpos -1551
+  ypos 539
+ }
+set N6de96000 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform4
+  xpos -1551
+  ypos 638
+ }
+set N6de95c00 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform5
+  xpos -1551
+  ypos 720
+ }
+set N6de95800 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform6
+  xpos -1551
+  ypos 803
+ }
+set N6de95400 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform7
+  xpos -1547
+  ypos 898
+ }
+set N6de95000 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform8
+  xpos -1547
+  ypos 985
+ }
+set N6de94c00 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform9
+  xpos -1547
+  ypos 1065
+ }
+set N6de94800 [stack 0]
+ Transform {
+  scale {{Transform1.scale}}
+  center {{Transform1.center.x} {Transform1.center.y}}
+  name Transform10
+  xpos -1547
+  ypos 1172
+ }
+ Blur {
+  size {{linearGrowth+(growth*10)}}
+  name Blur1
+  xpos -1416
+  ypos 1166
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur2
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1234
+  ypos 1155
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 10
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop22
+  xpos -1087
+  ypos 1166
+ }
+ Multiply {
+  value {{clamp(lenght-9)}}
+  name Multiply3
+  xpos -955
+  ypos 1166
+ }
+ Multiply {
+  value {{1-((decay)/1)}}
+  name Multiply4
+  xpos -809
+  ypos 1166
+ }
+push $N6de94800
+ Blur {
+  size {{linearGrowth+(growth*9)}}
+  name Blur3
+  xpos -1423
+  ypos 1059
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur4
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1232
+  ypos 1054
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 9
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop23
+  xpos -1079
+  ypos 1057
+ }
+ Multiply {
+  value {{clamp(lenght-8)}}
+  name Multiply5
+  xpos -951
+  ypos 1059
+ }
+ Multiply {
+  value {{1-((decay)*0.9)}}
+  name Multiply6
+  xpos -801
+  ypos 1059
+ }
+push $N6de94c00
+ Blur {
+  size {{linearGrowth+(growth*8)}}
+  name Blur5
+  xpos -1425
+  ypos 979
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur6
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1221
+  ypos 970
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 8
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop24
+  xpos -1078
+  ypos 981
+ }
+ Multiply {
+  value {{clamp(lenght-7)}}
+  name Multiply7
+  xpos -939
+  ypos 979
+ }
+ Multiply {
+  value {{1-((decay)*0.8)}}
+  name Multiply8
+  xpos -794
+  ypos 979
+ }
+push $N6de95000
+ Blur {
+  size {{linearGrowth+(growth*7)}}
+  name Blur8
+  xpos -1419
+  ypos 891
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur9
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1219
+  ypos 886
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 7
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop25
+  xpos -1079
+  ypos 892
+ }
+ Multiply {
+  value {{clamp(lenght-6)}}
+  name Multiply9
+  xpos -947
+  ypos 891
+ }
+ Multiply {
+  value {{1-((decay)*0.7)}}
+  name Multiply10
+  xpos -789
+  ypos 891
+ }
+push $N6de95400
+ Blur {
+  size {{linearGrowth+(growth*6)}}
+  name Blur10
+  xpos -1421
+  ypos 797
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur11
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1230
+  ypos 793
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 6
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop26
+  xpos -1067
+  ypos 803
+ }
+ Multiply {
+  value {{clamp(lenght-5)}}
+  name Multiply11
+  xpos -951
+  ypos 796
+ }
+ Multiply {
+  value {{1-((decay)*0.6)}}
+  name Multiply12
+  xpos -788
+  ypos 796
+ }
+push $N6de95800
+ Blur {
+  size {{linearGrowth+(growth*5)}}
+  name Blur63
+  xpos -1426
+  ypos 712
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur64
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1227
+  ypos 707
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 5
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop27
+  xpos -1068
+  ypos 718
+ }
+ Multiply {
+  value {{clamp(lenght-4)}}
+  name Multiply13
+  xpos -942
+  ypos 712
+ }
+ Multiply {
+  value {{1-((decay)*0.5)}}
+  name Multiply14
+  xpos -787
+  ypos 712
+ }
+push $N6de95c00
+ Blur {
+  size {{linearGrowth+(growth*4)}}
+  name Blur65
+  xpos -1415
+  ypos 630
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur66
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1218
+  ypos 625
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 4
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop28
+  xpos -1061
+  ypos 636
+ }
+ Multiply {
+  value {{clamp(lenght-3)}}
+  name Multiply15
+  xpos -951
+  ypos 630
+ }
+ Multiply {
+  value {{1-((decay)*0.4)}}
+  name Multiply16
+  xpos -789
+  ypos 630
+ }
+push $N6de96000
+ Blur {
+  size {{linearGrowth+(growth*3)}}
+  name Blur67
+  xpos -1422
+  ypos 531
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur68
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1233
+  ypos 526
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 3
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop29
+  xpos -1056
+  ypos 537
+ }
+ Multiply {
+  value {{clamp(lenght-2)}}
+  name Multiply17
+  xpos -946
+  ypos 531
+ }
+ Multiply {
+  value {{1-((decay)*0.3)}}
+  name Multiply18
+  xpos -787
+  ypos 531
+ }
+push $N6de96400
+ Blur {
+  size {{linearGrowth+(growth*2)}}
+  name Blur69
+  xpos -1421
+  ypos 437
+ }
+ Blur {
+  size {{Blur72.size*double}}
+  name Blur70
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1234
+  ypos 432
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 2
+  addUserKnob {7 double_2}
+  double_2 {{gBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop30
+  xpos -1068
+  ypos 443
+ }
+ Multiply {
+  value {{clamp(lenght-1)}}
+  name Multiply19
+  xpos -948
+  ypos 437
+ }
+ Multiply {
+  value {{1-((decay)*0.2)}}
+  name Multiply20
+  xpos -803
+  ypos 437
+ }
+push $N6de96800
+ Blur {
+  size {{linearGrowth+(growth*1)}}
+  name Blur71
+  xpos -1415
+  ypos 345
+ }
+ Blur {
+  size {{"(lerp(0, double_1, double_2))*double"}}
+  name Blur72
+  label "\[value size]"
+  note_font "Verdana Bold"
+  xpos -1230
+  ypos 340
+  addUserKnob {20 User}
+  addUserKnob {7 double_1 l max R 0 50}
+  double_1 5
+  addUserKnob {7 double l lol R 1 11}
+  double 1
+  addUserKnob {7 double_2}
+  double_2 {{bBlur}}
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop31
+  xpos -1069
+  ypos 351
+ }
+ Multiply {
+  value {{clamp(lenght)}}
+  name Multiply21
+  xpos -948
+  ypos 345
+ }
+ Multiply {
+  value {{1-((decay)*0.01)}}
+  name Multiply22
+  xpos -797
+  ypos 345
+ }
+ Dot {
+  name Dot4
+  xpos -603
+  ypos 354
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -637
+  ypos 443
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -637
+  ypos 537
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -637
+  ypos 636
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -637
+  ypos 718
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos -637
+  ypos 802
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos -637
+  ypos 897
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -637
+  ypos 985
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -637
+  ypos 1065
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos -637
+  ypos 1172
+ }
+ Dot {
+  name Dot17
+  xpos -603
+  ypos 1241
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge30
+  xpos -637
+  ypos 1311
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge29
+  xpos -637
+  ypos 1520
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -637
+  ypos 1746
+ }
+ Crop {
+  box {-50 -50 {width+50} {height+50}}
+  name Crop1
+  xpos -636
+  ypos 1864
+ }
+ Dot {
+  name Dot5
+  xpos -602
+  ypos 1904
+ }
+ Multiply {
+  inputs 1+1
+  value {{"lerp(1, 0, noisePower)"}}
+  name Multiply83
+  xpos -636
+  ypos 1948
+ }
+ Multiply {
+  value {{"lerp(0, 0.25, intensity)"}}
+  name Multiply1
+  xpos -636
+  ypos 2010
+ }
+ Multiply {
+  inputs 1+1
+  value {{"lerp(0, 0.5, core)"}}
+  name Multiply2
+  xpos -636
+  ypos 2059
+ }
+ Dot {
+  name Dot1
+  xpos -602
+  ypos 2163
+ }
+push $N6f91d800
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos -258
+  ypos 2160
+ }
+ Output {
+  name Output1
+  xpos -258
+  ypos 2263
+ }
+end_group

@@ -1,0 +1,1037 @@
+Group {
+ name mtAnam_ChAstigmatism
+ inputs 2
+ tile_color 0xff4c2dff
+ label "\[value astType]"
+ note_font "Verdana Bold"
+ note_font_size 12
+ addUserKnob {20 User}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T BlinkScript1.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {4 astType l type M {tangential sagittal "" ""}}
+ astType sagittal
+ addUserKnob {4 qualityAst l quality t "You will need to push the quality leves if you have high distortion values, with low distortion levels, mid quality should be ok" -STARTLINE M {"very low" low mid high "very high" ultra "" "" ""}}
+ qualityAst high
+ addUserKnob {6 checkDis l "check distortion" -STARTLINE}
+ addUserKnob {26 text l " " T " "}
+ addUserKnob {14 tanSize l "Tangential Size" R 0 100}
+ tanSize 12
+ addUserKnob {7 sagSize l "Sagittal Size" t Sa}
+ sagSize 0.25
+ addUserKnob {26 text_3 l "  " T "   "}
+ addUserKnob {14 redSlide t "This does not replace chromaAB, its just to enfatize subtle astigmatism effects on the different channels" R 0 100}
+ redSlide 1
+ addUserKnob {14 greenSlide t "This does not replace chromaAB, its just to enfatize subtle astigmatism effects on the different channels" R 0 100}
+ addUserKnob {14 blueSlide t "This does not replace chromaAB, its just to enfatize subtle astigmatism effects on the different channels" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {7 mixanam l mix}
+ mixanam 1
+ addUserKnob {26 text_2 l "    " T "   "}
+ addUserKnob {26 text_1 l "     " T "Miguel Torija - Anamorphic Astigmatism Chroma Beta"}
+}
+ Input {
+  inputs 0
+  name src
+  xpos -1392
+  ypos 1523
+ }
+ Dot {
+  name Dot5
+  xpos -1358
+  ypos 1652
+ }
+set N6b53cc00 [stack 0]
+ Expression {
+  expr0 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr1 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr2 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  expr3 "((x+scale) % scale + 1)/scale == 1  && ((y+scale) % scale + 1)/scale == 1 ? 1 : 0"
+  name Expression4
+  xpos -1216
+  ypos 1648
+  addUserKnob {20 User}
+  addUserKnob {7 scale R 0 100}
+  scale 75
+  addUserKnob {7 pointSize R 1 10}
+  pointSize 5
+ }
+ FilterErode {
+  channels all
+  size -8
+  name FilterErode2
+  xpos -1216
+  ypos 1696
+ }
+ Blur {
+  size 10
+  name Blur1
+  xpos -1216
+  ypos 1738
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.45
+  whitepoint 0.55
+  white_clamp true
+  name Grade1
+  xpos -1216
+  ypos 1776
+ }
+set N6b4eb800 [stack 0]
+push $N6b4eb800
+push $N6b53cc00
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input0]"}}
+  name Switch3
+  label "\[value which]"
+  xpos -1392
+  ypos 1775
+ }
+ Switch {
+  inputs 2
+  which {{checkDis}}
+  name Switch2
+  label "\[value which]"
+  xpos -1392
+  ypos 1905
+ }
+set N6b4eb000 [stack 0]
+ Dot {
+  name Dot3
+  xpos -1555
+  ypos 1915
+ }
+ NoOp {
+  name NoOp1
+  xpos -1589
+  ypos 1933
+  addUserKnob {20 User}
+  addUserKnob {14 size_wh R 0 100}
+  size_wh {{input.width} {input.height}}
+  addUserKnob {14 size_wh_1 R 0 100}
+  size_wh_1 {{size_wh.w/2} {size_wh.h/2}}
+ }
+push $N6b4eb000
+ Dot {
+  name Dot6
+  xpos -1358
+  ypos 2019
+ }
+set N6b4ea400 [stack 0]
+ Crop {
+  box {0 0 {parent.NoOp1.size_wh.w} {parent.NoOp1.size_wh.h}}
+  name Crop10
+  xpos -1495
+  ypos 2061
+ }
+push $N6b4ea400
+ CopyBBox {
+  inputs 2
+  name CopyBBox2
+  xpos -1392
+  ypos 2110
+ }
+ Dot {
+  name Dot72
+  xpos -1358
+  ypos 2353
+ }
+set N6b4e9800 [stack 0]
+ Dot {
+  name Dot2
+  xpos -1268
+  ypos 2353
+ }
+set N6b4e9400 [stack 0]
+ Dot {
+  name Dot1
+  xpos -1268
+  ypos 4092
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos -2854
+  ypos 2740
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -2638
+  ypos 2578
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input0]"}}
+  name Switch1
+  label "\[value which]"
+  xpos -2638
+  ypos 2757
+ }
+ Dot {
+  name Dot7
+  xpos -2436
+  ypos 2767
+ }
+set N6b4a3c00 [stack 0]
+ Dot {
+  name Dot36
+  xpos 1649
+  ypos 3352
+ }
+set N6b4a3800 [stack 0]
+push $N6b4e9400
+ Dot {
+  name Dot37
+  xpos 106
+  ypos 2353
+ }
+set N6b4a3400 [stack 0]
+ Dot {
+  name Dot10
+  xpos 1445
+  ypos 2353
+ }
+set N6b4a3000 [stack 0]
+ Dot {
+  name Dot24
+  xpos 2727
+  ypos 2353
+ }
+ Dot {
+  name Dot22
+  xpos 2727
+  ypos 2938
+ }
+set N6b4a2800 [stack 0]
+ Dot {
+  name Dot39
+  xpos 2414
+  ypos 2938
+ }
+ AdjBBox {
+  numpixels 250
+  name AdjBBox4
+  xpos 2380
+  ypos 3000
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr2 0
+  expr3 0
+  name Expression5
+  xpos 2380
+  ypos 3045
+ }
+ Dot {
+  name Dot40
+  xpos 2414
+  ypos 3100
+ }
+set N6b4a1800 [stack 0]
+ Dot {
+  name Dot41
+  xpos 2166
+  ypos 3100
+ }
+set N6b4a1400 [stack 0]
+ Dot {
+  name Dot42
+  xpos 2000
+  ypos 3256
+ }
+set N6b4a1000 [stack 0]
+push $N6b4a1400
+ Transform {
+  rotate {{SagittalTransformPositive3.rotate*-1}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformNegative3
+  xpos 1853
+  ypos 3153
+ }
+ Keymix {
+  inputs 3
+  name Keymix10
+  xpos 1853
+  ypos 3218
+ }
+ Dot {
+  name Dot43
+  xpos 1928
+  ypos 3565
+ }
+push $N6b4a1800
+ Dot {
+  name Dot44
+  xpos 2635
+  ypos 3175
+ }
+set N6b76fc00 [stack 0]
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve10
+  xpos 2432
+  ypos 3625
+ }
+push $N6b4a3800
+ Dot {
+  name Dot45
+  xpos 1830
+  ypos 3426
+ }
+push $N6b4a1000
+push $N6b4a1400
+ Transform {
+  rotate {{"lerp(0, 2, (sagSize+(blueSlide/100)))"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformPositive3
+  xpos 2146
+  ypos 3187
+ }
+ Keymix {
+  inputs 3
+  name Keymix11
+  xpos 2146
+  ypos 3342
+ }
+ Dot {
+  name Dot46
+  xpos 2180
+  ypos 3421
+ }
+push $N6b76fc00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve11
+  xpos 2376
+  ypos 3508
+ }
+push $N6b4a3800
+push $N6b76fc00
+push $N6b4a1800
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((tanSize.0/100)+(blueSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((tanSize.1/100)+(blueSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform2
+  xpos 2380
+  ypos 3188
+ }
+ Keymix {
+  inputs 3
+  name Keymix12
+  xpos 2385
+  ypos 3269
+ }
+ Dot {
+  name Dot47
+  xpos 2414
+  ypos 3318
+ }
+push $N6b76fc00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve12
+  xpos 2380
+  ypos 3360
+ }
+push $N6b76fc00
+push $N6b4a2800
+ BlinkScript {
+  inputs 5
+  recompileCount 54
+  ProgramGroup 1
+  KernelDescription "2 \"Astigmatism\" iterate pixelWise 7ada9b0260075949ef3e76e4caab2de68d70893b11fd8620d1b757247d0d95e7 6 \"src\" Read Random \"STMapStandard\" Read Point \"STMapTangential\" Read Point \"STMapSagittalpos\" Read Point \"STMapSagittalneg\" Read Point \"dst\" Write Point 3 \"count\" Int 1 AAAAAA== \"Tangential\" Bool 1 AA== \"Sagittal\" Bool 1 AA== 3 \"count\" 1 1 \"Tangential\" 1 1 \"Sagittal\" 1 1 10 \"UVTangential\" Float 2 1 AAAAAAAAAAA= \"UVSagittalPos\" Float 2 1 AAAAAAAAAAA= \"UVSagittalNeg\" Float 2 1 AAAAAAAAAAA= \"UVSagittal\" Float 2 1 AAAAAAAAAAA= \"resolution\" Int 2 1 AAAAAAAAAAA= \"outputTangential\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalpos\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalneg\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittal\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel Astigmatism : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapStandard; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapTangential; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalpos;\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalneg;\n  Image<eWrite> dst; // the output image\n\n  param:\n// This parameter is made available to the user.\n    int count;\n    bool Tangential;\n    bool Sagittal;\n\n\n  local:\n// This local variable is not exposed to the user.\n    float2 UVTangential;\n    float2 UVSagittalPos;\n    float2 UVSagittalNeg;\n    float2 UVSagittal;\n    int2 resolution;\n    float4 outputTangential;\n    float4 outputSagittalpos;\n    float4 outputSagittalneg;\n    float4 outputSagittal;  \n    float4 output;  \n  // In define(), parameters can be given labels and default values.\n  void define() \{\n\n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    // Initialise coefficients according to rec. 709 standard.\n    resolution.x = src.bounds.width();\n    resolution.y = src.bounds.height();\t    \n  \}\n\n  void process(int2 pos) \{\n    if(Tangential == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVTangential.x = (STMapStandard().x+(STMapTangential().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVTangential.y = (STMapStandard().y+(STMapTangential().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputTangential += bilinear(src, UVTangential.x, UVTangential.y);\n\n      \}\n    outputTangential = outputTangential/(count+1);\n    output =  outputTangential;\n    \}\t\n\n    if(Tangential == 0)\{\n      UVTangential.x = STMapStandard().x*resolution.x-.5f;\n      UVTangential.y = STMapStandard().y*resolution.y-.5f;\n\n      outputTangential = bilinear(src, UVTangential.x, UVTangential.y);   \n      output =  outputTangential;\n    \}\n  // Sagittal Affter\n    if(Sagittal == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalPos.x = (STMapStandard().x+(STMapSagittalpos().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalPos.y = (STMapStandard().y+(STMapSagittalpos().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalpos += bilinear(src, UVSagittalPos.x, UVSagittalPos.y);\n\n      \}\n    outputSagittalpos = outputSagittalpos/(count+1);\n\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalNeg.x = (STMapStandard().x+(STMapSagittalneg().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalNeg.y = (STMapStandard().y+(STMapSagittalneg().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalneg += bilinear(src, UVSagittalNeg.x, UVSagittalNeg.y);\n\n      \}\n    outputSagittalneg = outputSagittalneg/(count+1);\n    outputSagittal = (outputSagittalpos+outputSagittalneg)/2;\n    output =  outputSagittal;\n    \}\t\n\n    \t\n    dst()= output;\n\n\n  \}\n\};\n"
+  useGPUIfAvailable {{BlinkScript1.useGPUIfAvailable}}
+  vectorize false
+  rebuild ""
+  Astigmatism_count {{QualityCounter.integer}}
+  Astigmatism_Tangential {{astType==0?1:0}}
+  Astigmatism_Sagittal {{astType==1?1:0}}
+  rebuild_finalise ""
+  name BlinkScript4
+  xpos 2677
+  ypos 3665
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle4
+  label "\[value in]"
+  xpos 2670
+  ypos 3724
+ }
+ Clamp {
+  name Clamp1
+  xpos 2670
+  ypos 3762
+ }
+ Dot {
+  name Dot48
+  xpos 2711
+  ypos 3824
+ }
+ Dot {
+  name Dot49
+  xpos -273
+  ypos 3936
+ }
+push $N6b4a3c00
+ Dot {
+  name Dot26
+  xpos 367
+  ypos 3095
+ }
+set N6b717800 [stack 0]
+push $N6b4a3000
+ Dot {
+  name Dot23
+  xpos 1445
+  ypos 2681
+ }
+set N6b717400 [stack 0]
+ Dot {
+  name Dot27
+  xpos 1132
+  ypos 2681
+ }
+ AdjBBox {
+  numpixels 250
+  name AdjBBox3
+  xpos 1098
+  ypos 2743
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr2 0
+  expr3 0
+  name Expression2
+  xpos 1098
+  ypos 2788
+ }
+ Dot {
+  name Dot28
+  xpos 1132
+  ypos 2843
+ }
+set N6b716400 [stack 0]
+ Dot {
+  name Dot29
+  xpos 884
+  ypos 2843
+ }
+set N6b716000 [stack 0]
+ Dot {
+  name Dot30
+  xpos 718
+  ypos 2999
+ }
+set N6b715c00 [stack 0]
+push $N6b716000
+ Transform {
+  rotate {{SagittalTransformPositive2.rotate*-1}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformNegative2
+  xpos 571
+  ypos 2896
+ }
+ Keymix {
+  inputs 3
+  name Keymix7
+  xpos 571
+  ypos 2961
+ }
+ Dot {
+  name Dot31
+  xpos 646
+  ypos 3308
+ }
+push $N6b716400
+ Dot {
+  name Dot32
+  xpos 1280
+  ypos 2939
+ }
+set N6b714c00 [stack 0]
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve7
+  xpos 1150
+  ypos 3368
+ }
+push $N6b717800
+ Dot {
+  name Dot33
+  xpos 548
+  ypos 3169
+ }
+push $N6b715c00
+push $N6b716000
+ Transform {
+  rotate {{"lerp(0, 2, (sagSize+(blueSlide/100)))"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformPositive2
+  xpos 864
+  ypos 2930
+ }
+ Keymix {
+  inputs 3
+  name Keymix8
+  xpos 864
+  ypos 3085
+ }
+ Dot {
+  name Dot34
+  xpos 898
+  ypos 3164
+ }
+push $N6b714c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve8
+  xpos 1094
+  ypos 3251
+ }
+push $N6b717800
+push $N6b714c00
+push $N6b716400
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((tanSize.0/100)+(blueSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((tanSize.1/100)+(blueSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform1
+  xpos 1098
+  ypos 2931
+ }
+ Keymix {
+  inputs 3
+  name Keymix9
+  xpos 1103
+  ypos 3012
+ }
+ Dot {
+  name Dot35
+  xpos 1132
+  ypos 3061
+ }
+push $N6b714c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve9
+  xpos 1098
+  ypos 3103
+ }
+push $N6b714c00
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((blueSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((blueSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform6
+  xpos 1357
+  ypos 3016
+  disable {{"astType==0 && redSlide < 0?0:1"}}
+ }
+push $N6b714c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve15
+  xpos 1337
+  ypos 3089
+ }
+push $N6b717400
+ BlinkScript {
+  inputs 5
+  recompileCount 54
+  ProgramGroup 1
+  KernelDescription "2 \"Astigmatism\" iterate pixelWise 7ada9b0260075949ef3e76e4caab2de68d70893b11fd8620d1b757247d0d95e7 6 \"src\" Read Random \"STMapStandard\" Read Point \"STMapTangential\" Read Point \"STMapSagittalpos\" Read Point \"STMapSagittalneg\" Read Point \"dst\" Write Point 3 \"count\" Int 1 AAAAAA== \"Tangential\" Bool 1 AA== \"Sagittal\" Bool 1 AA== 3 \"count\" 1 1 \"Tangential\" 1 1 \"Sagittal\" 1 1 10 \"UVTangential\" Float 2 1 AAAAAAAAAAA= \"UVSagittalPos\" Float 2 1 AAAAAAAAAAA= \"UVSagittalNeg\" Float 2 1 AAAAAAAAAAA= \"UVSagittal\" Float 2 1 AAAAAAAAAAA= \"resolution\" Int 2 1 AAAAAAAAAAA= \"outputTangential\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalpos\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalneg\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittal\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel Astigmatism : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapStandard; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapTangential; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalpos;\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalneg;\n  Image<eWrite> dst; // the output image\n\n  param:\n// This parameter is made available to the user.\n    int count;\n    bool Tangential;\n    bool Sagittal;\n\n\n  local:\n// This local variable is not exposed to the user.\n    float2 UVTangential;\n    float2 UVSagittalPos;\n    float2 UVSagittalNeg;\n    float2 UVSagittal;\n    int2 resolution;\n    float4 outputTangential;\n    float4 outputSagittalpos;\n    float4 outputSagittalneg;\n    float4 outputSagittal;  \n    float4 output;  \n  // In define(), parameters can be given labels and default values.\n  void define() \{\n\n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    // Initialise coefficients according to rec. 709 standard.\n    resolution.x = src.bounds.width();\n    resolution.y = src.bounds.height();\t    \n  \}\n\n  void process(int2 pos) \{\n    if(Tangential == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVTangential.x = (STMapStandard().x+(STMapTangential().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVTangential.y = (STMapStandard().y+(STMapTangential().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputTangential += bilinear(src, UVTangential.x, UVTangential.y);\n\n      \}\n    outputTangential = outputTangential/(count+1);\n    output =  outputTangential;\n    \}\t\n\n    if(Tangential == 0)\{\n      UVTangential.x = STMapStandard().x*resolution.x-.5f;\n      UVTangential.y = STMapStandard().y*resolution.y-.5f;\n\n      outputTangential = bilinear(src, UVTangential.x, UVTangential.y);   \n      output =  outputTangential;\n    \}\n  // Sagittal Affter\n    if(Sagittal == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalPos.x = (STMapStandard().x+(STMapSagittalpos().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalPos.y = (STMapStandard().y+(STMapSagittalpos().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalpos += bilinear(src, UVSagittalPos.x, UVSagittalPos.y);\n\n      \}\n    outputSagittalpos = outputSagittalpos/(count+1);\n\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalNeg.x = (STMapStandard().x+(STMapSagittalneg().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalNeg.y = (STMapStandard().y+(STMapSagittalneg().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalneg += bilinear(src, UVSagittalNeg.x, UVSagittalNeg.y);\n\n      \}\n    outputSagittalneg = outputSagittalneg/(count+1);\n    outputSagittal = (outputSagittalpos+outputSagittalneg)/2;\n    output =  outputSagittal;\n    \}\t\n\n    \t\n    dst()= output;\n\n\n  \}\n\};\n"
+  useGPUIfAvailable {{BlinkScript1.useGPUIfAvailable}}
+  vectorize false
+  rebuild ""
+  Astigmatism_count {{QualityCounter.integer}}
+  Astigmatism_Tangential {{astType==0?1:0}}
+  Astigmatism_Sagittal {{astType==1?1:0}}
+  rebuild_finalise ""
+  name BlinkScript3
+  xpos 1395
+  ypos 3408
+ }
+ Shuffle {
+  red black
+  green black
+  name Shuffle3
+  label "\[value in]"
+  xpos 1392
+  ypos 3478
+ }
+ Dot {
+  name Dot11
+  xpos 1429
+  ypos 3567
+ }
+push $N6b4a3c00
+ Dot {
+  name Dot12
+  xpos -972
+  ypos 3035
+ }
+set N6b6d4800 [stack 0]
+push $N6b4a3400
+ Dot {
+  name Dot9
+  xpos 106
+  ypos 2621
+ }
+set N6b6d4400 [stack 0]
+ Dot {
+  name Dot13
+  xpos -207
+  ypos 2621
+ }
+ AdjBBox {
+  numpixels 250
+  name AdjBBox2
+  xpos -241
+  ypos 2683
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr2 0
+  expr3 0
+  name Expression1
+  xpos -241
+  ypos 2728
+ }
+ Dot {
+  name Dot14
+  xpos -207
+  ypos 2783
+ }
+set N6ba77000 [stack 0]
+ Dot {
+  name Dot15
+  xpos -455
+  ypos 2783
+ }
+set N6ba76c00 [stack 0]
+ Dot {
+  name Dot16
+  xpos -621
+  ypos 2939
+ }
+set N6ba76800 [stack 0]
+push $N6ba76c00
+ Transform {
+  rotate {{SagittalTransformPositive1.rotate*-1}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformNegative1
+  xpos -768
+  ypos 2836
+ }
+ Keymix {
+  inputs 3
+  name Keymix4
+  xpos -768
+  ypos 2901
+ }
+ Dot {
+  name Dot17
+  xpos -693
+  ypos 3248
+ }
+push $N6ba77000
+ Dot {
+  name Dot18
+  xpos -55
+  ypos 2864
+ }
+set N6ba75800 [stack 0]
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve4
+  xpos -189
+  ypos 3308
+ }
+push $N6b6d4800
+ Dot {
+  name Dot19
+  xpos -791
+  ypos 3109
+ }
+push $N6ba76800
+push $N6ba76c00
+ Transform {
+  rotate {{"lerp(0, 2, (sagSize+(greenSlide/100)))"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformPositive1
+  xpos -475
+  ypos 2870
+ }
+ Keymix {
+  inputs 3
+  name Keymix5
+  xpos -475
+  ypos 3025
+ }
+ Dot {
+  name Dot20
+  xpos -441
+  ypos 3104
+ }
+push $N6ba75800
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve5
+  xpos -245
+  ypos 3191
+ }
+push $N6b6d4800
+push $N6ba75800
+push $N6ba77000
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((tanSize.0/100)+(greenSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((tanSize.1/100)+(greenSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform10
+  xpos -241
+  ypos 2861
+ }
+ Keymix {
+  inputs 3
+  name Keymix6
+  xpos -236
+  ypos 2952
+ }
+ Dot {
+  name Dot21
+  xpos -207
+  ypos 3001
+ }
+push $N6ba75800
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve6
+  xpos -241
+  ypos 3043
+ }
+push $N6ba75800
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((greenSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((greenSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform5
+  xpos 16
+  ypos 2929
+  disable {{"astType==0 && redSlide < 0?0:1"}}
+ }
+push $N6ba75800
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve14
+  xpos -6
+  ypos 2993
+ }
+push $N6b6d4400
+ BlinkScript {
+  inputs 5
+  recompileCount 53
+  ProgramGroup 1
+  KernelDescription "2 \"Astigmatism\" iterate pixelWise 7ada9b0260075949ef3e76e4caab2de68d70893b11fd8620d1b757247d0d95e7 6 \"src\" Read Random \"STMapStandard\" Read Point \"STMapTangential\" Read Point \"STMapSagittalpos\" Read Point \"STMapSagittalneg\" Read Point \"dst\" Write Point 3 \"count\" Int 1 AAAAAA== \"Tangential\" Bool 1 AA== \"Sagittal\" Bool 1 AA== 3 \"count\" 1 1 \"Tangential\" 1 1 \"Sagittal\" 1 1 10 \"UVTangential\" Float 2 1 AAAAAAAAAAA= \"UVSagittalPos\" Float 2 1 AAAAAAAAAAA= \"UVSagittalNeg\" Float 2 1 AAAAAAAAAAA= \"UVSagittal\" Float 2 1 AAAAAAAAAAA= \"resolution\" Int 2 1 AAAAAAAAAAA= \"outputTangential\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalpos\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalneg\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittal\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel Astigmatism : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapStandard; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapTangential; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalpos;\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalneg;\n  Image<eWrite> dst; // the output image\n\n  param:\n// This parameter is made available to the user.\n    int count;\n    bool Tangential;\n    bool Sagittal;\n\n\n  local:\n// This local variable is not exposed to the user.\n    float2 UVTangential;\n    float2 UVSagittalPos;\n    float2 UVSagittalNeg;\n    float2 UVSagittal;\n    int2 resolution;\n    float4 outputTangential;\n    float4 outputSagittalpos;\n    float4 outputSagittalneg;\n    float4 outputSagittal;  \n    float4 output;  \n  // In define(), parameters can be given labels and default values.\n  void define() \{\n\n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    // Initialise coefficients according to rec. 709 standard.\n    resolution.x = src.bounds.width();\n    resolution.y = src.bounds.height();\t    \n  \}\n\n  void process(int2 pos) \{\n    if(Tangential == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVTangential.x = (STMapStandard().x+(STMapTangential().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVTangential.y = (STMapStandard().y+(STMapTangential().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputTangential += bilinear(src, UVTangential.x, UVTangential.y);\n\n      \}\n    outputTangential = outputTangential/(count+1);\n    output =  outputTangential;\n    \}\t\n\n    if(Tangential == 0)\{\n      UVTangential.x = STMapStandard().x*resolution.x-.5f;\n      UVTangential.y = STMapStandard().y*resolution.y-.5f;\n\n      outputTangential = bilinear(src, UVTangential.x, UVTangential.y);   \n      output =  outputTangential;\n    \}\n  // Sagittal Affter\n    if(Sagittal == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalPos.x = (STMapStandard().x+(STMapSagittalpos().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalPos.y = (STMapStandard().y+(STMapSagittalpos().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalpos += bilinear(src, UVSagittalPos.x, UVSagittalPos.y);\n\n      \}\n    outputSagittalpos = outputSagittalpos/(count+1);\n\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalNeg.x = (STMapStandard().x+(STMapSagittalneg().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalNeg.y = (STMapStandard().y+(STMapSagittalneg().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalneg += bilinear(src, UVSagittalNeg.x, UVSagittalNeg.y);\n\n      \}\n    outputSagittalneg = outputSagittalneg/(count+1);\n    outputSagittal = (outputSagittalpos+outputSagittalneg)/2;\n    output =  outputSagittal;\n    \}\t\n\n    \t\n    dst()= output;\n\n\n  \}\n\};\n"
+  useGPUIfAvailable {{BlinkScript1.useGPUIfAvailable}}
+  vectorize false
+  rebuild ""
+  Astigmatism_count {{QualityCounter.integer}}
+  Astigmatism_Tangential {{astType==0?1:0}}
+  Astigmatism_Sagittal {{astType==1?1:0}}
+  rebuild_finalise ""
+  name BlinkScript2
+  xpos 56
+  ypos 3342
+ }
+ Shuffle {
+  red black
+  blue black
+  name Shuffle2
+  label "\[value in]"
+  xpos 58
+  ypos 3390
+ }
+ Dot {
+  name Dot38
+  xpos 90
+  ypos 3465
+ }
+push $N6b4a3c00
+push $N6b4e9800
+ Dot {
+  name Dot71
+  xpos -1671
+  ypos 2353
+ }
+ AdjBBox {
+  numpixels 250
+  name AdjBBox1
+  xpos -1705
+  ypos 2415
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr2 0
+  expr3 0
+  name Expression3
+  xpos -1705
+  ypos 2460
+ }
+ Dot {
+  name Dot76
+  xpos -1671
+  ypos 2515
+ }
+set N6ba38800 [stack 0]
+ Dot {
+  name Dot78
+  xpos -1919
+  ypos 2515
+ }
+set N6ba38400 [stack 0]
+ Dot {
+  name Dot4
+  xpos -2085
+  ypos 2671
+ }
+set N6b9e3c00 [stack 0]
+push $N6ba38400
+ Transform {
+  rotate {{SagittalTransformPositive.rotate*-1}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformNegative
+  xpos -2232
+  ypos 2568
+ }
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -2232
+  ypos 2633
+ }
+ Dot {
+  name Dot79
+  xpos -2157
+  ypos 2980
+ }
+push $N6ba38800
+ Dot {
+  name Dot77
+  xpos -1504
+  ypos 2603
+ }
+set N6b9e2c00 [stack 0]
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve3
+  xpos -1653
+  ypos 3040
+ }
+push $N6b4a3c00
+ Dot {
+  name Dot8
+  xpos -2255
+  ypos 2841
+ }
+push $N6b9e3c00
+push $N6ba38400
+ Transform {
+  rotate {{"lerp(0, 2, (sagSize+(redSlide/100)))"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name SagittalTransformPositive
+  xpos -1939
+  ypos 2603
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos -1939
+  ypos 2757
+ }
+ Dot {
+  name Dot74
+  xpos -1905
+  ypos 2836
+ }
+push $N6b9e2c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve2
+  xpos -1709
+  ypos 2923
+ }
+push $N6b4a3c00
+push $N6b9e2c00
+push $N6ba38800
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((tanSize.0/100)+(redSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((tanSize.1/100)+(redSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform3
+  xpos -1705
+  ypos 2567
+ }
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos -1700
+  ypos 2684
+ }
+ Dot {
+  name Dot73
+  xpos -1671
+  ypos 2733
+ }
+push $N6b9e2c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve1
+  xpos -1705
+  ypos 2775
+ }
+push $N6b9e2c00
+ Transform {
+  scale {{"(trunc(100000*(lerp(1, 1.1, ((redSlide.0/100))))))/100000"} {"(trunc(100000*(lerp(1, 1.1, ((redSlide.1/100))))))/100000"}}
+  center {{parent.NoOp1.size_wh_1.w} {parent.NoOp1.size_wh_1.h}}
+  black_outside false
+  shutteroffset centred
+  name Transform4
+  xpos -1444
+  ypos 2669
+  disable {{"astType==0 && redSlide < 0?0:1"}}
+ }
+push $N6b9e2c00
+ Dissolve {
+  inputs 2
+  which {{mixanam}}
+  name Dissolve13
+  xpos -1485
+  ypos 2737
+ }
+push $N6b4e9800
+ BlinkScript {
+  inputs 5
+  recompileCount 53
+  ProgramGroup 1
+  KernelDescription "2 \"Astigmatism\" iterate pixelWise 7ada9b0260075949ef3e76e4caab2de68d70893b11fd8620d1b757247d0d95e7 6 \"src\" Read Random \"STMapStandard\" Read Point \"STMapTangential\" Read Point \"STMapSagittalpos\" Read Point \"STMapSagittalneg\" Read Point \"dst\" Write Point 3 \"count\" Int 1 AAAAAA== \"Tangential\" Bool 1 AA== \"Sagittal\" Bool 1 AA== 3 \"count\" 1 1 \"Tangential\" 1 1 \"Sagittal\" 1 1 10 \"UVTangential\" Float 2 1 AAAAAAAAAAA= \"UVSagittalPos\" Float 2 1 AAAAAAAAAAA= \"UVSagittalNeg\" Float 2 1 AAAAAAAAAAA= \"UVSagittal\" Float 2 1 AAAAAAAAAAA= \"resolution\" Int 2 1 AAAAAAAAAAA= \"outputTangential\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalpos\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittalneg\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputSagittal\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel Astigmatism : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapStandard; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapTangential; \n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalpos;\n  Image<eRead, eAccessPoint, eEdgeClamped> STMapSagittalneg;\n  Image<eWrite> dst; // the output image\n\n  param:\n// This parameter is made available to the user.\n    int count;\n    bool Tangential;\n    bool Sagittal;\n\n\n  local:\n// This local variable is not exposed to the user.\n    float2 UVTangential;\n    float2 UVSagittalPos;\n    float2 UVSagittalNeg;\n    float2 UVSagittal;\n    int2 resolution;\n    float4 outputTangential;\n    float4 outputSagittalpos;\n    float4 outputSagittalneg;\n    float4 outputSagittal;  \n    float4 output;  \n  // In define(), parameters can be given labels and default values.\n  void define() \{\n\n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    // Initialise coefficients according to rec. 709 standard.\n    resolution.x = src.bounds.width();\n    resolution.y = src.bounds.height();\t    \n  \}\n\n  void process(int2 pos) \{\n    if(Tangential == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVTangential.x = (STMapStandard().x+(STMapTangential().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVTangential.y = (STMapStandard().y+(STMapTangential().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputTangential += bilinear(src, UVTangential.x, UVTangential.y);\n\n      \}\n    outputTangential = outputTangential/(count+1);\n    output =  outputTangential;\n    \}\t\n\n    if(Tangential == 0)\{\n      UVTangential.x = STMapStandard().x*resolution.x-.5f;\n      UVTangential.y = STMapStandard().y*resolution.y-.5f;\n\n      outputTangential = bilinear(src, UVTangential.x, UVTangential.y);   \n      output =  outputTangential;\n    \}\n  // Sagittal Affter\n    if(Sagittal == 1)\{\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalPos.x = (STMapStandard().x+(STMapSagittalpos().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalPos.y = (STMapStandard().y+(STMapSagittalpos().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalpos += bilinear(src, UVSagittalPos.x, UVSagittalPos.y);\n\n      \}\n    outputSagittalpos = outputSagittalpos/(count+1);\n\n      for(int i = 0; i < count; i++) \{\n\n        UVSagittalNeg.x = (STMapStandard().x+(STMapSagittalneg().x-STMapStandard().x)*(float(i)/count))*resolution.x-.5f;\n        UVSagittalNeg.y = (STMapStandard().y+(STMapSagittalneg().y-STMapStandard().y)*(float(i)/count))*resolution.y-.5f;\n\n        outputSagittalneg += bilinear(src, UVSagittalNeg.x, UVSagittalNeg.y);\n\n      \}\n    outputSagittalneg = outputSagittalneg/(count+1);\n    outputSagittal = (outputSagittalpos+outputSagittalneg)/2;\n    output =  outputSagittal;\n    \}\t\n\n    \t\n    dst()= output;\n\n\n  \}\n\};\n"
+  useGPUIfAvailable false
+  vectorize false
+  rebuild ""
+  Astigmatism_count {{QualityCounter.integer}}
+  Astigmatism_Tangential {{astType==0?1:0}}
+  Astigmatism_Sagittal {{astType==1?1:0}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos -1408
+  ypos 3074
+ }
+ Shuffle {
+  green black
+  blue black
+  name Shuffle1
+  label "\[value in]"
+  xpos -1408
+  ypos 3246
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos -1408
+  ypos 3461
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge2
+  xpos -1408
+  ypos 3563
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -1408
+  ypos 3889
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos -1408
+  ypos 4088
+ }
+ Dot {
+  name Dot75
+  xpos -1374
+  ypos 4147
+ }
+ Output {
+  name Output1
+  xpos -1408
+  ypos 4192
+ }
+ NoOp {
+  inputs 0
+  name QualityCounter
+  xpos -1234
+  ypos 3070
+  addUserKnob {20 User}
+  addUserKnob {3 integer}
+  integer {{qualityAst==0?5:(qualityAst==1?10:(qualityAst==2?20:(qualityAst==3?30:(qualityAst==4?40:60))))}}
+ }
+end_group
