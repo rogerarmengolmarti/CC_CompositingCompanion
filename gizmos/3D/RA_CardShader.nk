@@ -2,8 +2,9 @@ set cut_paste_input [stack 0]
 version 17.1 v1
 push $cut_paste_input
 CardShader {
- name CardShader1
+ name RA_CardShader1
+ tile_color 0x28a47fff
  selected true
- xpos -3959
- ypos -1359
+ xpos -1332
+ ypos -1642
 }

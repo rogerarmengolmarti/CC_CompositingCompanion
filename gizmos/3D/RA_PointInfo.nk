@@ -1,9 +1,10 @@
 set cut_paste_input [stack 0]
 version 17.1 v1
 push $cut_paste_input
-IDToColor {
- name IDToColor1
+PointsInfo {
+ name RA_PointsInfo1
+ tile_color 0x28a47fff
  selected true
- xpos -3730
- ypos -1425
+ xpos -1486
+ ypos -1570
 }

@@ -6,11 +6,11 @@ DeepToPointsAdvanced {
  render_mode solid
  cast_shadow false
  receive_shadow false
- point_detail 0.005
- point_size 0.25
+ point_detail 0.001
+ skip_empty false
  make_prims false
- name DeepToPointsAdvanced1
+ name RA_DeepToPointsAdvanced1
  selected true
- xpos -3730
- ypos -1836
+ xpos -1663
+ ypos -1799
 }

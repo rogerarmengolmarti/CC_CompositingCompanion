@@ -2,7 +2,7 @@ set cut_paste_input [stack 0]
 version 17.1 v2
 push $cut_paste_input
 Group {
- name OutlineFromNormal1
+ name RA_OutlineFromNormal1
  tile_color 0x29a580ff
  selected true
  xpos -1247

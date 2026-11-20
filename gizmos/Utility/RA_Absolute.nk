@@ -6,7 +6,7 @@ Expression {
  expr1 abs(g)
  expr2 abs(b)
  expr3 abs(a)
- name Absolute
+ name RA_Absolute
  tile_color 0x28a37eff
  selected true
  xpos -971

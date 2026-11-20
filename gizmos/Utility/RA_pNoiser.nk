@@ -2,7 +2,7 @@ set cut_paste_input [stack 0]
 version 15.2 v9
 push $cut_paste_input
 Group {
- name pNoiser
+ name RA_pNoiser
  tile_color 0x29a580ff
  selected true
  xpos 6880

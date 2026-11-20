@@ -1,0 +1,13 @@
+set cut_paste_input [stack 0]
+version 17.1 v1
+push $cut_paste_input
+CollapsePointsByDistance {
+ ref_frame 1001
+ kill_start 4.5
+ falloff_dist 8.5
+ name RA_CollapsePointsByDistance1
+ tile_color 0x28a47fff
+ selected true
+ xpos -1805
+ ypos -1735
+}
